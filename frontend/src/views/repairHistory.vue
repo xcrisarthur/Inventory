@@ -8,7 +8,7 @@
           <th class="text-uppercase"> Deskripsi </th>
           <th class="text-uppercase"> Tanggal <br> Kerusakan </th>
           <th class="text-uppercase"> Tanggal <br> Selesai Perbaikan </th>
-          <th class="text-uppercase"> Id <br> Pemakaian </th>
+          <!-- <th class="text-uppercase"> Id <br> Pemakaian </th> -->
           <th class="text-uppercase"> Tempat <br> Perbaikan </th>
         </tr>
       </thead>
@@ -19,7 +19,7 @@
         <td>{{ history.deskripsi }}</td>
         <td>{{ history.tanggal_kerusakan }}</td>
         <td>{{ history.tanggal_selesai_perbaikan }}</td>
-        <td>{{ history.id_pemakaian }}</td>
+        <!-- <td>{{ history.id_pemakaian }}</td> -->
         <td>{{ history.tempat_perbaikan }}</td>
         </tr>
       </tbody>

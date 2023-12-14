@@ -12,7 +12,7 @@
           </div>
 
           <div class="col form-group">
-            <label for="merk">merk</label>
+            <label for="merk">Merk</label>
             <input v-model="inventoryItem.merk" type="text" class="form-control" id="merk" required>
           </div>
 
@@ -23,7 +23,7 @@
 
           <div class="col form-group">
             <label for="tanggal" class="form-label">Tanggal</label>
-            <input v-model="inventoryItem.tanggal" type="text" class="form-control" id="tanggal">
+            <input v-model="inventoryItem.tanggal" type="date" class="form-control" id="tanggal">
           </div>
 
           <div class="col form-group">
@@ -51,10 +51,10 @@
             <input v-model="inventoryItem.deskripsi" type="text" class="form-control" id="deskripsi" required>
           </div>
 
-          <div class="col form-group">
+          <!-- <div class="col form-group">
             <label for="status" class="form-label">Status</label>
             <input v-model="inventoryItem.status" type="text" class="form-control" id="status" required>
-          </div>
+          </div> -->
 
           <div class="col form-group">
             <label for="id_kategori" class="form-label">Kategori</label>
@@ -87,22 +87,22 @@
 
           <div class="col form-group">
             <label for="tahun_1" class="form-label">Tahun 1</label>
-            <input v-model="inventoryItem.tahun_1" type="number" class="form-control" id="tahun_1">
+            <input v-model="inventoryItem.tahun_1" type="number" class="form-control" id="tahun_1" disabled>
           </div>
 
           <div class="col form-group">
             <label for="tahun_2" class="form-label">Tahun 2</label>
-            <input v-model="inventoryItem.tahun_2" type="number" class="form-control" id="tahun_2">
+            <input v-model="inventoryItem.tahun_2" type="number" class="form-control" id="tahun_2" disabled>
           </div>
 
           <div class="col form-group">
             <label for="tahun_3" class="form-label">Tahun 3</label>
-            <input v-model="inventoryItem.tahun_3" type="number" class="form-control" id="tahun_3">
+            <input v-model="inventoryItem.tahun_3" type="number" class="form-control" id="tahun_3" disabled>
           </div>
 
           <div class="col form-group">
             <label for="tahun_4" class="form-label">Tahun 4</label>
-            <input v-model="inventoryItem.tahun_4" type="number" class="form-control" id="tahun_4">
+            <input v-model="inventoryItem.tahun_4" type="number" class="form-control" id="tahun_4" disabled>
           </div>
 
           <div class="col form-group">

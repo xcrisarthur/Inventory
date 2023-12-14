@@ -1,5 +1,6 @@
 import { createStore } from "vuex";
 import bootstrap from "bootstrap/dist/js/bootstrap.min.js";
+import axios from "axios";
 
 export default createStore({
   state: {
@@ -20,6 +21,18 @@ export default createStore({
       "position-sticky blur shadow-blur left-auto top-1 z-index-sticky px-0 mx-4",
     absolute: "position-absolute px-4 mx-0 w-100 z-index-2",
     bootstrap,
+
+    // For Fetch Data
+    DamageHistoryList: [],
+    RepairHistoryList: [],
+    UsageHistoryList: [],
+    rooms: [],
+    usages: [],
+    categories: [],
+    employees: [],
+    locations: [],
+    inventories: [],
+    // For Fetch Data
   },
   mutations: {
     toggleConfigurator(state) {
@@ -58,6 +71,36 @@ export default createStore({
     toggleHideConfig(state) {
       state.hideConfigButton = !state.hideConfigButton;
     },
+
+    // For Fetch Data
+    setDamageHistoryList(state, data) {
+      state.DamageHistoryList = data;
+    },
+    setRepairHistoryList(state, data) {
+      state.RepairHistoryList = data;
+    },
+    setUsageHistoryList(state, data) {
+      state.UsageHistoryList = data;
+    },
+    setRoomsList(state, data) {
+      state.rooms = data;
+    },
+    setUsagesList(state, data) {
+      state.usages = data;
+    },
+    setCategoriesList(state, data) {
+      state.categories = data;
+    },
+    setEmployeesList(state, data) {
+      state.employees = data;
+    },
+    setLocationsList(state, data) {
+      state.locations = data;
+    },
+    setInventoriesList(state, data) {
+      state.inventories = data;
+    },
+    // For Fetch Data
   },
   actions: {
     toggleSidebarColor({ commit }, payload) {
@@ -66,6 +109,19 @@ export default createStore({
     setCardBackground({ commit }, payload) {
       commit("cardBackground", payload);
     },
+
+    // For Fetch Data
+    async fetchData({ commit }, { endpoint, dataKey, mutation }) {
+      try {
+        const response = await axios
+          .get(`http://localhost:8080/api/${endpoint}`);
+        commit(mutation, response.data[dataKey]);
+      } catch (error) {
+        console.error(`Error fetching ${dataKey}:`, error);
+      }
+    },
+    // For Fetch Data
+
   },
   getters: {},
 });

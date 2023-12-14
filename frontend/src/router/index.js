@@ -32,7 +32,15 @@ import UsageADD from "@/views/UsageADD.vue";
 import UsageEDIT from "@/views/UsageEDIT.vue";
 
 import reportHistory from "@/views/reportHistory.vue";
+
 import repairHistory from "@/views/repairHistory.vue";
+import repairHistoryADD from "@/views/repairHistoryADD.vue";
+import repairHistoryEDIT from "@/views/repairHistoryEDIT.vue";
+
+import damageHistory from "@/views/damageHistory.vue";
+import damageHistoryADD from "@/views/damageHistoryADD.vue";
+import damageHistoryEDIT from "@/views/damageHistoryEDIT.vue";
+
 import usageHistory from "@/views/usageHistory.vue";
 import InventoryADD from "@/views/InventoryADD.vue";
 import InventoryEDIT from "@/views/InventoryEDIT.vue";
@@ -114,9 +122,34 @@ const routes = [
     component: repairHistory,
   },
   {
+    path: "/repairHistoryADD",
+    name: "repairHistoryADD",
+    component: repairHistoryADD,
+  },
+  {
+    path: "/repairHistory/:id",
+    name: "repairHistoryEDIT",
+    component: repairHistoryEDIT,
+  },
+  {
     path: "/usageHistory",
     name: "usageHistory",
     component: usageHistory,
+  },
+  {
+    path: "/damageHistory",
+    name: "damageHistory",
+    component: damageHistory,
+  },
+  {
+    path: "/damageHistoryADD",
+    name: "damageHistoryADD",
+    component: damageHistoryADD,
+  },
+  {
+    path: "/damageHistory/:id",
+    name: "damageHistoryEDIT",
+    component: damageHistoryEDIT,
   },
   {
     path: "/Usage",

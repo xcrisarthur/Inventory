@@ -1,11 +1,20 @@
 <template>
   <div class="py-4 container-fluid">
     <div class="row">
+      <div class="col-sm-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Jumlah Items</h5>
+            <p class="card-text">{{ inventories.length }}</p>
+            <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+          </div>
+        </div>
+      </div>
       <div class="col-sm-4 mb-3 mb-sm-0 mb-4">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <h5 class="card-title">Jumlah Ruangan</h5>
+            <p class="card-text">{{ rooms.length }}</p>
             <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
           </div>
         </div>
@@ -13,21 +22,13 @@
       <div class="col-sm-4 mb-4">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <h5 class="card-title">Jumlah Kayawan</h5>
+            <p class="card-text">{{ employees.length }}</p>
             <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
           </div>
         </div>
       </div>
-      <div class="col-sm-4 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-          </div>
-        </div>
-      </div>
+      
     </div>
 
     <div class="row">
@@ -68,142 +69,58 @@
       </div>
     </div>
 
-    <div class="mt-4 row">
-      <div class="mb-4 col-lg-5 mb-lg-0">
-        <div class="card z-index-2">
-          <div class="p-3 card-body">
-            <reports-bar-chart id="chart-bar" title="lorem ipsum dolor sit amot" description="" :chart="{
-              labels: [
-                'Apr',
-                'May',
-                'Jun',
-                'Jul',
-                'Aug',
-                'Sep',
-                'Oct',
-                'Nov',
-                'Dec',
-              ],
-              datasets: {
-                label: 'Sales',
-                data: [450, 200, 100, 220, 500, 100, 400, 230, 500],
-              },
-            }" :items="[
-  {
-    icon: {
-      color: 'primary',
-      component: faUsers,
-    },
-    label: 'lorem',
-    progress: { content: '??', percentage: 10 },
-  },
-  {
-    icon: { color: 'info', component: faHandPointer },
-    label: 'ipsum',
-    progress: { content: '??', percentage: 30 },
-  },
-  {
-    icon: { color: 'warning', component: faCreditCard },
-    label: 'dolor',
-    progress: { content: '??', percentage: 60 },
-  },
-  {
-    icon: { color: 'danger', component: faScrewdriverWrench },
-    label: 'sit',
-    progress: { content: '??', percentage: 90 },
-  },
-]" />
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-7">
-        <!-- line chart -->
-        <div class="card z-index-2">
-          <gradient-line-chart id="chart-line" title="Gradient Line Chart" description="" :chart="{
-            labels: [
-              'Apr',
-              'May',
-              'Jun',
-              'Jul',
-              'Aug',
-              'Sep',
-              'Oct',
-              'Nov',
-              'Dec',
-            ],
-            datasets: [
-              {
-                label: 'Mobile Apps',
-                data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-              },
-              {
-                label: 'Websites',
-                data: [30, 90, 40, 140, 290, 290, 340, 230, 400],
-              },
-            ],
-          }" />
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 <script>
-import ReportsBarChart from "@/examples/Charts/ReportsBarChart.vue";
-import GradientLineChart from "@/examples/Charts/GradientLineChart.vue";
-import US from "../assets/img/icons/flags/US.png";
-import DE from "../assets/img/icons/flags/DE.png";
-import GB from "../assets/img/icons/flags/GB.png";
-import BR from "../assets/img/icons/flags/BR.png";
-import {
-  faHandPointer,
-  faUsers,
-  faCreditCard,
-  faScrewdriverWrench,
-} from "@fortawesome/free-solid-svg-icons";
+import axios from 'axios';
+
 export default {
   name: "dashboard-default",
   data() {
     return {
-      iconBackground: "bg-gradient-dark",
-      faCreditCard,
-      faScrewdriverWrench,
-      faUsers,
-      faHandPointer,
-      sales: {
-        us: {
-          country: "United States",
-          sales: 2500,
-          value: "$230,900",
-          bounce: "29.9%",
-          flag: US,
-        },
-        germany: {
-          country: "Germany",
-          sales: "3.900",
-          value: "$440,000",
-          bounce: "40.22%",
-          flag: DE,
-        },
-        britain: {
-          country: "Great Britain",
-          sales: "1.400",
-          value: "$190,700",
-          bounce: "23.44%",
-          flag: GB,
-        },
-        brasil: {
-          country: "Brasil",
-          sales: "562",
-          value: "$143,960",
-          bounce: "32.14%",
-          flag: BR,
-        },
-      },
+      inventories: [],
+      rooms: [],
+      employees: [],
     };
   },
-  components: {
-    ReportsBarChart,
-    GradientLineChart,
+  mounted() {
+    this.fetchInventories();
+    this.fetchRooms();
+    this.fetchEmployees();
+
   },
+  methods: {
+    fetchInventories() {
+      axios.get('http://localhost:8080/api/inventories')
+        .then(response => {
+          this.inventories = response.data.inventory;
+          console.log(this.inventories)
+        })
+        .catch(error => {
+          console.error('Error fetching inventories:', error);
+          alert('Failed to fetch inventories. Please try again later.');
+        });
+    },
+    fetchRooms() {
+      axios.get('http://localhost:8080/api/rooms')
+        .then(response => {
+          this.rooms = response.data.rooms;
+          console.log(this.rooms)
+        })
+        .catch(error => {
+          console.error('Error fetching rooms:', error);
+        });
+    },
+    fetchEmployees() {
+      axios.get('http://localhost:8080/api/employees')
+        .then(response => {
+          this.employees = response.data.employees;
+          console.log(this.employees)
+        })
+        .catch(error => {
+          console.error('Error fetching employees:', error);
+        });
+    },
+  }
 };
 </script>

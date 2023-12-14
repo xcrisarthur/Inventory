@@ -41,6 +41,18 @@
               </select>
             </div>
           </div>
+
+          <div class="col">
+            <div class="">
+              <label for="status" class="form-label">Status</label>
+              <select v-model="newUsage.status" class="form-select" id="status">
+                <option value="baik">Baik</option>
+                <option value="rusak">Rusak</option>
+              </select>
+            </div>
+          </div>
+          
+
           <div class="col">
             <button type="submit" class="btn btn-primary">Add Data</button>
           </div>
@@ -61,6 +73,7 @@ export default {
         kode_aset: '',
         nomor_induk: '',
         id_ruangan: '',
+        status: '',
       },
       inventories: [],
       employees: [],

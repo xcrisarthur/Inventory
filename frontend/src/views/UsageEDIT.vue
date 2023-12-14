@@ -39,6 +39,16 @@
             </div>
           </div>
 
+          <div class="col">
+            <div class="">
+              <label for="status" class="form-label">Status</label>
+              <select v-model="usages.status" class="form-select" id="status">
+                <option value="baik">Baik</option>
+                <option value="rusak">Rusak</option>
+              </select>
+            </div>
+          </div>
+
           <div class="col form-group">
             <button type="submit" class="btn btn-primary">Update Data</button>
           </div>
@@ -60,6 +70,8 @@ export default {
         kode_aset: '',
         nomor_induk: '',
         id_ruangan: '',
+        status: '',
+
       },
       rooms: [],
       inventories: [],

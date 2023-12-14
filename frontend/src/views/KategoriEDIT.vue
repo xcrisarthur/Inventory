@@ -6,7 +6,8 @@
                 <div class="row row-cols-2 row-cols-lg-3 g-lg-3">
                     <div class="col form-group">
                         <label for="id_kategori">Category Id</label>
-                        <input v-model="categoryItem.id_kategori" type="text" class="form-control" id="id_kategori" disabled>
+                        <input v-model="categoryItem.id_kategori" type="text" class="form-control" id="id_kategori"
+                            disabled>
                     </div>
 
                     <div class="col form-group">

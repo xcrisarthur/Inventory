@@ -8,13 +8,13 @@
                     <div class="col">
                         <div class="">
                             <label for="kode_aset" class="form-label">Kode aset</label>
-                            <input v-model="newInventory.kode_aset" type="text" class="form-control" id="kode_aset">
+                            <input v-model="newInventory.kode_aset" type="text" class="form-control" id="kode_aset" disabled>
                         </div>
                     </div>
 
                     <div class="col">
                         <div class="">
-                            <label for="merk" class="form-label">merk</label>
+                            <label for="merk" class="form-label">Merk</label>
                             <input v-model="newInventory.merk" type="text" class="form-control" id="merk">
                         </div>
                     </div>
@@ -29,7 +29,9 @@
                     <div class="col">
                         <div class="">
                             <label for="tanggal" class="form-label">Tanggal</label>
-                            <input v-model="newInventory.tanggal" type="text" class="form-control" id="tanggal">
+<input v-model="newInventory.tanggal" type="date" class="form-control" id="tanggal">
+
+                            <!-- <input v-model="newInventory.tanggal" type="text" class="form-control" id="tanggal"> -->
                         </div>
                     </div>
 
@@ -67,11 +69,11 @@
                         </div>
                     </div>
 
-                    <div class="col">
+                    <!-- <div class="col">
                         <div class=""><label for="status" class="form-label">Status</label>
                             <input v-model="newInventory.status" type="text" class="form-control" id="status">
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="col">
                         <div class=""><label for="id_kategori" class="form-label">Kategori</label>
