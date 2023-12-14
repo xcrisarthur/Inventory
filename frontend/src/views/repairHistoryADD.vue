@@ -7,7 +7,7 @@
 
         <div class="mb-3 col">
           <label for="id_perbaikan" class="form-label">id_perbaikan</label>
-          <input v-model="newRepair.id_perbaikan" type="text" class="form-control" id="id_perbaikan" required>
+          <input v-model="newRepair.id_perbaikan" type="text" class="form-control" id="id_perbaikan" disabled>
         </div>
         <div class="mb-3 col">
           <label for="tanggal_perbaikan" class="form-label">tanggal_perbaikan</label>

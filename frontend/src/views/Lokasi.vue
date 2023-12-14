@@ -147,7 +147,7 @@ export default {
         axios.delete(`http://localhost:8080/api/locations/${itemId}`)
           .then(() => {
             alert('Item successfully deleted.');
-            this.fetchLocations();
+            window.location.reload();
           })
           .catch(error => {
             console.error('Error deleting item:', error);

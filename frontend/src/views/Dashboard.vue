@@ -94,7 +94,7 @@ export default {
       axios.get('http://localhost:8080/api/inventories')
         .then(response => {
           this.inventories = response.data.inventory;
-          console.log(this.inventories)
+          // console.log(this.inventories)
         })
         .catch(error => {
           console.error('Error fetching inventories:', error);
@@ -105,7 +105,7 @@ export default {
       axios.get('http://localhost:8080/api/rooms')
         .then(response => {
           this.rooms = response.data.rooms;
-          console.log(this.rooms)
+          // console.log(this.rooms)
         })
         .catch(error => {
           console.error('Error fetching rooms:', error);
@@ -115,7 +115,7 @@ export default {
       axios.get('http://localhost:8080/api/employees')
         .then(response => {
           this.employees = response.data.employees;
-          console.log(this.employees)
+          // console.log(this.employees)
         })
         .catch(error => {
           console.error('Error fetching employees:', error);

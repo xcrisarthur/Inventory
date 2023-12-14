@@ -201,7 +201,7 @@ export default {
         axios.delete(`http://localhost:8080/api/usages/${itemId}`)
           .then(() => {
             alert('Item successfully deleted.');
-            this.fetchUsages(); // Refresh the items list
+            window.location.reload();
           })
           .catch(error => {
             console.error('Error deleting item:', error);

@@ -29,7 +29,7 @@
                     <div class="col">
                         <div class="">
                             <label for="tanggal" class="form-label">Tanggal</label>
-<input v-model="newInventory.tanggal" type="date" class="form-control" id="tanggal">
+<input v-model="newInventory.tanggal" type="datetime-local" class="form-control" id="tanggal">
 
                             <!-- <input v-model="newInventory.tanggal" type="text" class="form-control" id="tanggal"> -->
                         </div>

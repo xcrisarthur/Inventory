@@ -150,7 +150,7 @@ export default {
         axios.delete(`http://localhost:8080/api/categories/${itemId}`)
           .then(() => {
             alert('Item successfully deleted.');
-            this.fetchCategories();
+            window.location.reload();
           })
           .catch(error => {
             console.error('Error deleting item:', error);

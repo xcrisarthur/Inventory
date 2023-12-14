@@ -257,7 +257,7 @@ export default {
         axios.delete(`http://localhost:8080/api/employees/${itemId}`)
           .then(() => {
             alert('Item successfully deleted.');
-            this.fetchEmployees(); // Refresh the items list
+            window.location.reload();
           })
           .catch(error => {
             console.error('Error deleting item:', error);
@@ -298,19 +298,10 @@ export default {
         reader.onload = () => {
           const csvData = reader.result;
           const jsonData = this.convertCsvToJson(csvData);
-          // this.employeesCsv = jsonData.map(item => ({
-          //   ...item,
-          //   harga: Number(item.harga),
-          //   nilai_residu: Number(item.nilai_residu),
-          //   masa_manfaat: Number(item.masa_manfaat),
-          //   depresiasi: Number(item.depresiasi),
-          //   tahun_1: Number(item.tahun_1),
-          //   tahun_2: Number(item.tahun_2),
-          //   tahun_3: Number(item.tahun_3),
-          //   tahun_4: Number(item.tahun_4),
-          // }));
-
-          this.employeesCsv = jsonData
+          this.employeesCsv = jsonData.map(item => ({
+            ...item,
+            gender: Boolean(item.gender),
+          }));
         };
 
         reader.readAsText(file);

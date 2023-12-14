@@ -1,16 +1,17 @@
 <template>
-  <div class="container text-center">
-    <div class="row">
+  <h1>Page Usage History</h1>
+
+  <div class="d-flex flex-row mb-3">
+    <div class="p-2">
       <div class="col">
-        <h1>Page Usage History</h1>
       </div>
-      <div class="col pt-3">
+      <!-- <div class="col pt-3">
         <div class="input-group flex-nowrap">
           <span class="input-group-text" id="addon-wrapping"><i class="fas fa-search" aria-hidden="true"></i></span>
           <input v-model="searchText" @input="filterItems" type="text" class="form-control"
             placeholder="Search History..." aria-label="Username" aria-describedby="addon-wrapping" />
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 
@@ -43,34 +44,40 @@
   <table class="table table-striped text-center ">
     <thead>
       <tr>
-        <th class="text-uppercase"> Nomor Induk <br> Old </th>
-        <th class="text-uppercase"> Nomor Induk <br> New </th>
+        <th class="text-uppercase"> Item </th>
+        <th class="text-uppercase"> Pengguna <br> Lama </th>
+        <th class="text-uppercase"> Pengguna <br> Baru </th>
         <th class="text-uppercase"> Tanggal </th>
-        <th class="text-uppercase"> Ruangan <br> Old </th>
-        <th class="text-uppercase"> Ruangan <br> New </th>
-        <!-- <th class="text-uppercase"> Id <br> Pemakaian </th> -->
+        <th class="text-uppercase"> Ruangan <br> Lama </th>
+        <th class="text-uppercase"> Ruangan <br> Baru </th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="history in UsageHistoryList" :key="history.id">
-        <td>{{ history.nomor_induk_old}}</td>
-        <td>{{ history.nomor_induk_new }}</td>
-        <td>{{ history.tanggal }}</td>
-        <td>{{ history.ruangan_old }}</td>
-        <td>{{ history.ruangan_new }}</td>
-        <!-- <td>{{ history.Usage.Room.nama }}</td> -->
+        <td>{{ history.Usage.Inventory.nama }}</td>
+        <td v-for="employee in employees" :key="employee.nomor_induk">
+          <p v-if="employee.nomor_induk === history.nomor_induk_old">
+            {{ employee.nama}}
+          </p>
+          <span v-else>
+            <td>{{ history.Usage.Employee.nama }}</td>
+          </span>
+        </td>
+        <td>{{ history.tanggal }}</td>        
+        <td v-for="room in rooms" :key="room.id_ruangan">
+          <p v-if="room.id_ruangan === history.ruangan_old">
+            {{ room.nama}}
+          </p>
+          <span v-else>
+            <td>{{ history.Usage.Room.nama }}</td>
+          </span>
+        </td>
       </tr>
     </tbody>
   </table>
 </template>
   
 <script>
-// import axios from 'axios';
-// import router from '../router';
-// import jsPDF from 'jspdf';
-// import Papa from 'papaparse';
-// import 'jspdf-autotable';
-
 export default {
   data() {
     return {
@@ -89,6 +96,13 @@ export default {
   computed: {
     UsageHistoryList() {
       return this.$store.state.UsageHistoryList;
+    },
+    employees() {
+      console.log(this.$store.state.employees)
+      return this.$store.state.employees;
+    },
+    rooms() {
+      return this.$store.state.rooms;
     },
     filteredUsageHistories() {
       return this.usageHistories.filter(ReportHistories =>
@@ -126,13 +140,22 @@ export default {
       const roomNew = this.usageHistories.map(ReportHistories => ReportHistories.ruangan_new).filter(Boolean);
       return [...new Set(roomNew)];
     },
-
   },
   mounted() {
     this.$store.dispatch('fetchData', {
       endpoint: 'usageHistories',
       dataKey: 'ReportHistories',
       mutation: 'setUsageHistoryList',
+    });
+    this.$store.dispatch('fetchData', {
+      endpoint: 'employees',
+      dataKey: 'employees',
+      mutation: 'setEmployeesList',
+    });
+    this.$store.dispatch('fetchData', {
+      endpoint: 'rooms',
+      dataKey: 'rooms',
+      mutation: 'setRoomsList',
     });
   },
   methods: {

@@ -71,7 +71,6 @@ export default {
         nomor_induk: '',
         id_ruangan: '',
         status: '',
-
       },
       rooms: [],
       inventories: [],
