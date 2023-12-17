@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import bootstrap from "bootstrap/dist/js/bootstrap.min.js";
 import axios from "axios";
+import router from '../router';
 
 export default createStore({
   state: {
@@ -21,6 +22,8 @@ export default createStore({
       "position-sticky blur shadow-blur left-auto top-1 z-index-sticky px-0 mx-4",
     absolute: "position-absolute px-4 mx-0 w-100 z-index-2",
     bootstrap,
+
+    isLoggedIn: localStorage.getItem('isLoggedIn') === 'true' || false,
 
     // For Fetch Data
     DamageHistoryList: [],
@@ -72,6 +75,11 @@ export default createStore({
       state.hideConfigButton = !state.hideConfigButton;
     },
 
+    setLoggedIn(state, value) {
+      state.isLoggedIn = value;
+      localStorage.setItem('isLoggedIn', value); // Save in local storage
+    },
+
     // For Fetch Data
     setDamageHistoryList(state, data) {
       state.DamageHistoryList = data;
@@ -108,6 +116,24 @@ export default createStore({
     },
     setCardBackground({ commit }, payload) {
       commit("cardBackground", payload);
+    },
+
+    async login({ commit }, { email, password }) {
+      try {
+        const response = await axios.post('http://localhost:8080/login', {
+          email,
+          password,
+        });
+        commit('setLoggedIn', true);
+        console.log(response)
+        router.push({ path: `/dashboard` });
+      } catch (error) {
+        console.error('Login error:', error);
+      }
+    },
+    logout({ commit }) {
+      commit('setLoggedIn', false);
+      router.push({ name: 'Sign In' });
     },
 
     // For Fetch Data

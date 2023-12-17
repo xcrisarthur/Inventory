@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -15,10 +16,11 @@ import (
 	"github.com/06202003/apiInventory/controllers/roomcontroller"
 	"github.com/06202003/apiInventory/controllers/usagecontroller"
 	"github.com/06202003/apiInventory/models"
-
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
+
+var version = "1.0.0"
 
 func main() {
 
@@ -63,10 +65,10 @@ func main() {
 	api.HandleFunc("/usageHistories/{id}", reporthistorypemakaiancontroller.Show).Methods("GET")
 
 	api.HandleFunc("/repairHistories", reporthistoryperbaikancontroller.Index).Methods("GET")
-	api.HandleFunc("/repairHistories/{id}", reporthistoryperbaikancontroller.Show).Methods("GET")
+	api.HandleFunc("/repairHistories/{id_perbaikan}", reporthistoryperbaikancontroller.Show).Methods("GET")
 	api.HandleFunc("/repairHistories", reporthistoryperbaikancontroller.Create).Methods("POST")
-	api.HandleFunc("/repairHistories/{id}", reporthistoryperbaikancontroller.Update).Methods("PUT")
-	api.HandleFunc("/repairHistories/{id}", reporthistoryperbaikancontroller.Delete).Methods("DELETE")
+	api.HandleFunc("/repairHistories/{id_perbaikan}", reporthistoryperbaikancontroller.Update).Methods("PUT")
+	api.HandleFunc("/repairHistories/{id_perbaikan}", reporthistoryperbaikancontroller.Delete).Methods("DELETE")
 
 	api.HandleFunc("/problemHistories", reporthistorykerusakancontroller.Index).Methods("GET")
 	api.HandleFunc("/problemHistories/{id}", reporthistorykerusakancontroller.Show).Methods("GET")
@@ -88,17 +90,58 @@ func main() {
 
 	// api.Use(middlewares.JWTMiddleware)
 
-	// Setup CORS to handle requests from all origins
-	corsObj := handlers.AllowedOrigins([]string{"http://localhost:8081"})
+	corsObj := handlers.AllowedOrigins([]string{"http://localhost:8081", "http://192.168.0.102:8081/"})
 	corsMethods := handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"})
 	corsHeaders := handlers.AllowedHeaders([]string{"Content-Type", "Authorization", "X-Requested-With"})
 
-	// Apply CORS middleware to the router
 	cors := handlers.CORS(corsObj, corsMethods, corsHeaders)
 	http.Handle("/", cors(r))
 
-	// Error handling for server start
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
 	}
+
+	printBanner()
+
+	fmt.Printf("App Version %s\n", version)
+	fmt.Printf("Happy Hacking 🧑‍💻")
+	fmt.Printf("Happy Hacking 🧑‍💻")
+	fmt.Printf(`
+	
+Made by
+Yezekiel David Setiawan
+
+Supported by
+Cristianto Tri Arthurito
+Laurentius Gusti Ontoseno Panata Yudha
+	`)
+
+	log.Fatal(http.ListenAndServe(":8080", r))
+}
+
+func printBanner() {
+	banner := `
+██╗    ██╗██╗████████╗                                                     
+██║    ██║██║╚══██╔══╝                                                     
+██║ █╗ ██║██║   ██║                                                        
+██║███╗██║██║   ██║                                                        
+╚███╔███╔╝██║   ██║                                                        
+╚══╝╚══╝ ╚═╝   ╚═╝                                                        
+																	
+██╗███╗   ██╗██╗   ██╗███████╗███╗   ██╗████████╗ ██████╗ ██████╗ ██╗   ██╗
+██║████╗  ██║██║   ██║██╔════╝████╗  ██║╚══██╔══╝██╔═══██╗██╔══██╗╚██╗ ██╔╝
+██║██╔██╗ ██║██║   ██║█████╗  ██╔██╗ ██║   ██║   ██║   ██║██████╔╝ ╚████╔╝ 
+██║██║╚██╗██║╚██╗ ██╔╝██╔══╝  ██║╚██╗██║   ██║   ██║   ██║██╔══██╗  ╚██╔╝  
+██║██║ ╚████║ ╚████╔╝ ███████╗██║ ╚████║   ██║   ╚██████╔╝██║  ██║   ██║   
+╚═╝╚═╝  ╚═══╝  ╚═══╝  ╚══════╝╚═╝  ╚═══╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝   ╚═╝   
+																	
+███████╗██╗   ██╗███████╗████████╗███████╗███╗   ███╗                      
+██╔════╝╚██╗ ██╔╝██╔════╝╚══██╔══╝██╔════╝████╗ ████║                      
+███████╗ ╚████╔╝ ███████╗   ██║   █████╗  ██╔████╔██║                      
+╚════██║  ╚██╔╝  ╚════██║   ██║   ██╔══╝  ██║╚██╔╝██║                      
+███████║   ██║   ███████║   ██║   ███████╗██║ ╚═╝ ██║                      
+╚══════╝   ╚═╝   ╚══════╝   ╚═╝   ╚══════╝╚═╝     ╚═╝                      
+																										
+	`
+	fmt.Println(banner)
 }
