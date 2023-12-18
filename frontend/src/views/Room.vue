@@ -13,8 +13,7 @@
             <div class="offcanvas-header">
               <h2 class="offcanvas-title m-auto" id="offcanvasTopLabel">Preview Data From CSV</h2>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas" aria-label="Close">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg" height="16" width="12" viewBox="0 0 384 512">
+                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="12" viewBox="0 0 384 512">
                   <path
                     d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
                 </svg>
@@ -152,7 +151,7 @@ export default {
       const locations = this.rooms.map(rooms => rooms.Location?.nama).filter(Boolean);
       return [...new Set(locations)];
     },
-    
+
   },
   mounted() {
     this.$store.dispatch('fetchData', {
@@ -244,19 +243,25 @@ export default {
       return parsedData.data;
     },
     addDataToDatabase() {
-      const dataToSend = this.roomsCsv.length > 0 ? this.roomsCsv[0] : {};
-      axios.post('http://localhost:8080/api/rooms', dataToSend)
-        .then(response => {
-          console.log('Data added successfully:', response.data);
-          alert('Data added successfully.');
-          this.fileSelected = false;
-          window.location.reload();
-        })
-        .catch(error => {
-          console.error('Error adding data:', error);
-          alert('Failed to add data. Please try again later.');
-        });
+      // Memeriksa apakah ada data di roomsCsv
+      if (this.roomsCsv.length > 0) {
+        // Mengirim semua data dari roomsCsv ke server
+        axios.post('http://localhost:8080/api/rooms', this.roomsCsv)
+          .then(response => {
+            console.log('Data added successfully:', response.data);
+            alert('Data added successfully.');
+            this.fileSelected = false;
+            window.location.reload();
+          })
+          .catch(error => {
+            console.error('Error adding data:', error);
+            alert('Failed to add data. Please try again later.');
+          });
+      } else {
+        alert('No data to add. Please select a valid CSV file.');
+      }
     },
+
   },
 };
 </script>
