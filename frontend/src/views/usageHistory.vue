@@ -55,23 +55,11 @@
     <tbody>
       <tr v-for="history in UsageHistoryList" :key="history.id">
         <td>{{ history.Usage.Inventory.nama }}</td>
-        <td v-for="employee in employees" :key="employee.nomor_induk">
-          <p v-if="employee.nomor_induk === history.nomor_induk_old">
-            {{ employee.nama}}
-          </p>
-          <span v-else>
-            <td>{{ history.Usage.Employee.nama }}</td>
-          </span>
-        </td>
-        <td>{{ history.tanggal }}</td>        
-        <td v-for="room in rooms" :key="room.id_ruangan">
-          <p v-if="room.id_ruangan === history.ruangan_old">
-            {{ room.nama}}
-          </p>
-          <span v-else>
-            <td>{{ history.Usage.Room.nama }}</td>
-          </span>
-        </td>
+        <td>{{ getEmployeeName(history.nomor_induk_old) }}</td>
+        <td>{{ history.Usage.Employee.nama }}</td>
+        <td>{{ history.tanggal }}</td>
+        <td>{{ getRoomName(history.ruangan_old) }}</td>
+        <td>{{ history.Usage.Room.nama }}</td>
       </tr>
     </tbody>
   </table>
@@ -98,7 +86,7 @@ export default {
       return this.$store.state.UsageHistoryList;
     },
     employees() {
-      console.log(this.$store.state.employees)
+      // console.log(this.$store.state.employees)
       return this.$store.state.employees;
     },
     rooms() {
@@ -173,6 +161,14 @@ export default {
       } else {
         console.error('Modal element not found.');
       }
+    },
+    getEmployeeName(nomorInduk) {
+      const employee = this.employees.find(emp => emp.nomor_induk === nomorInduk);
+      return employee ? employee.nama : 'Employee Not Found';
+    },
+    getRoomName(ruangan_old) {
+      const room = this.rooms.find(emp => emp.id_ruangan === ruangan_old);
+      return room ? room.nama : 'room Not Found';
     },
   }
 };

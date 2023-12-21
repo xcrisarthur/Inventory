@@ -121,7 +121,7 @@ export default {
       );
     },
     filteredLocationsCsv() {
-      return this.locations.filter(locations =>
+      return this.locationsCsv.filter(locations =>
         this.searchLocations(locations, this.searchText.toLowerCase())
       );
     },
@@ -199,20 +199,34 @@ export default {
       const parsedData = Papa.parse(csvData, { header: true });
       return parsedData.data;
     },
+
     addDataToDatabase() {
-      const dataToSend = this.locationsCsv.length > 0 ? this.locationsCsv[0] : {};
-      axios.post('http://localhost:8080/api/locations', dataToSend)
-        .then(response => {
-          console.log('Data added successfully:', response.data);
-          alert('Data added successfully.');
-          this.fileSelected = false;
-          window.location.reload();
-        })
-        .catch(error => {
-          console.error('Error adding data:', error);
-          alert('Failed to add data. Please try again later.');
+      if (this.locationsCsv.length > 0) {
+        const validLocations = this.locationsCsv.filter(location => {
+          const values = Object.values(location);
+          return values.every(value => value != null && value !== '');
         });
+
+        if (validLocations.length > 0) {
+          axios.post('http://localhost:8080/api/locations', validLocations)
+            .then(response => {
+              console.log('Data added successfully:', response.data);
+              alert('Data added successfully.');
+              this.fileSelected = false;
+              window.location.reload();
+            })
+            .catch(error => {
+              console.error('Error adding data:', error);
+              alert('Failed to add data. Please try again later.');
+            });
+        } else {
+          alert('No valid data to add. Please make sure all columns are filled.');
+        }
+      } else {
+        alert('No data to add. Please select a valid CSV file.');
+      }
     },
+
   },
 };
 </script>

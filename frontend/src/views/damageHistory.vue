@@ -158,6 +158,8 @@
     </tbody>
   </table>
 
+
+  <hr class="mt-7">
   <div class="d-flex flex-row mb-3 ">
     <div class="">
       <h3>Repair History</h3>

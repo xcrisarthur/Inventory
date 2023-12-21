@@ -43,8 +43,8 @@
             <div class="">
               <label for="status" class="form-label">Status</label>
               <select v-model="usages.status" class="form-select" id="status">
-                <option value="baik">Baik</option>
-                <option value="rusak">Rusak</option>
+                <option value="baik" :key="usages.id_pemakaian">Baik</option>
+                <option value="rusak" :key="usages.id_pemakaian">Rusak</option>
               </select>
             </div>
           </div>

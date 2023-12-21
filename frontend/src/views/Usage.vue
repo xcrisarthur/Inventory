@@ -290,19 +290,39 @@ export default {
       const parsedData = Papa.parse(csvData, { header: true });
       return parsedData.data;
     },
+    // addDataToDatabase() {
+    //   const dataToSend = this.usagesCsv.length > 0 ? this.usagesCsv[0] : {};
+    //   axios.post('http://localhost:8080/api/usages', dataToSend)
+    //     .then(response => {
+    //       console.log('Data added successfully:', response.data);
+    //       alert('Data added successfully.');
+    //       this.fileSelected = false;
+    //       window.location.reload();
+    //     })
+    //     .catch(error => {
+    //       console.error('Error adding data:', error);
+    //       alert('Failed to add data. Please try again later.');
+    //     });
+    // },
+
     addDataToDatabase() {
-      const dataToSend = this.usagesCsv.length > 0 ? this.usagesCsv[0] : {};
-      axios.post('http://localhost:8080/api/usages', dataToSend)
-        .then(response => {
-          console.log('Data added successfully:', response.data);
-          alert('Data added successfully.');
-          this.fileSelected = false;
-          window.location.reload();
-        })
-        .catch(error => {
-          console.error('Error adding data:', error);
-          alert('Failed to add data. Please try again later.');
-        });
+      // Memeriksa apakah ada data di usagesCsv
+      if (this.usagesCsv.length > 0) {
+        // Mengirim semua data dari usagesCsv ke server
+        axios.post('http://localhost:8080/api/usages', this.usagesCsv)
+          .then(response => {
+            console.log('Data added successfully:', response.data);
+            alert('Data added successfully.');
+            this.fileSelected = false;
+            window.location.reload();
+          })
+          .catch(error => {
+            console.error('Error adding data:', error);
+            alert('Failed to add data. Please try again later.');
+          });
+      } else {
+        alert('No data to add. Please select a valid CSV file.');
+      }
     },
   },
 };

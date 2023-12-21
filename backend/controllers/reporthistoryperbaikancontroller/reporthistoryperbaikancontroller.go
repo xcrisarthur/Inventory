@@ -2,8 +2,9 @@ package reporthistoryperbaikancontroller
 
 import (
 	"encoding/json"
-	"net/http"
 	"fmt"
+	"net/http"
+
 	"github.com/06202003/apiInventory/helper"
 	"github.com/06202003/apiInventory/models"
 	"github.com/gorilla/mux"
@@ -40,9 +41,9 @@ func Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := updateUsageStatusThroughDamageRecord(reportHistoryPerbaikan.IdHistoryKerusakan, "rusak"); err != nil {
-        helper.ResponseJSON(w, http.StatusInternalServerError, map[string]string{"message": "Failed to update usage status"})
-        return
-    }
+		helper.ResponseJSON(w, http.StatusInternalServerError, map[string]string{"message": "Failed to update usage status"})
+		return
+	}
 
 	if err := models.DB.Create(&reportHistoryPerbaikan).Error; err != nil {
 		helper.ResponseJSON(w, http.StatusInternalServerError, map[string]string{"message": "Gagal membuat history perbaikan"})
@@ -96,23 +97,21 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 	helper.ResponseJSON(w, http.StatusNoContent, map[string]interface{}{"message": "Data deleted successfully"})
 }
 
-
 // Function to update the usage status through the corresponding damage record
 func updateUsageStatusThroughDamageRecord(idHistoryKerusakan string, status string) error {
-    var reportHistoryKerusakan models.ReportHistoryKerusakan
+	var reportHistoryKerusakan models.ReportHistoryKerusakan
 
-    if err := models.DB.First(&reportHistoryKerusakan, "id = ?", idHistoryKerusakan).Error; err != nil {
-        return err
-    }
+	if err := models.DB.First(&reportHistoryKerusakan, "id = ?", idHistoryKerusakan).Error; err != nil {
+		return err
+	}
 
-    // Assuming there's a direct reference to the Usage record through the ReportHistoryKerusakan record
-    usageID := reportHistoryKerusakan.Usage.IdPemakaian
+	// Assuming there's a direct reference to the Usage record through the ReportHistoryKerusakan record
+	usageID := reportHistoryKerusakan.Usage.IdPemakaian
 
-    // Update the status of the associated usage item to "baik"
+	// Update the status of the associated usage item to "baik"
 	updateUsageStatus(usageID, status)
-    return nil
+	return nil
 }
-
 
 func updateUsageStatus(usageID string, status string) {
 	var usage models.Usage

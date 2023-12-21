@@ -8,7 +8,7 @@
                     <div class="col">
                         <div class="">
                             <label for="kode_aset" class="form-label">Kode aset</label>
-                            <input v-model="newInventory.kode_aset" type="text" class="form-control" id="kode_aset" disabled>
+                            <input v-model="newInventory.kode_aset" type="text" class="form-control" id="kode_aset" >
                         </div>
                     </div>
 

@@ -314,19 +314,32 @@ export default {
       const parsedData = Papa.parse(csvData, { header: true });
       return parsedData.data;
     },
+
     addDataToDatabase() {
-      const dataToSend = this.employeesCsv.length > 0 ? this.employeesCsv[0] : {};
-      axios.post('http://localhost:8080/api/employees', dataToSend)
-        .then(response => {
-          console.log('Data added successfully:', response.data);
-          alert('Data added successfully.');
-          this.fileSelected = false;
-          window.location.reload();
-        })
-        .catch(error => {
-          console.error('Error adding data:', error);
-          alert('Failed to add data. Please try again later.');
+      if (this.employeesCsv.length > 0) {
+        const validEmployees = this.employeesCsv.filter(employee => {
+          const values = Object.values(employee);
+          return values.every(value => value != null && value !== '');
         });
+
+        if (validEmployees.length > 0) {
+          axios.post('http://localhost:8080/api/employees', validEmployees)
+            .then(response => {
+              console.log('Data added successfully:', response.data);
+              alert('Data added successfully.');
+              this.fileSelected = false;
+              window.location.reload();
+            })
+            .catch(error => {
+              console.error('Error adding data:', error);
+              alert('Failed to add data. Please try again later.');
+            });
+        } else {
+          alert('No valid data to add. Please make sure all columns are filled.');
+        }
+      } else {
+        alert('No data to add. Please select a valid CSV file.');
+      }
     },
   },
 };

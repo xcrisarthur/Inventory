@@ -242,21 +242,28 @@ export default {
       const parsedData = Papa.parse(csvData, { header: true });
       return parsedData.data;
     },
+
     addDataToDatabase() {
-      // Memeriksa apakah ada data di roomsCsv
       if (this.roomsCsv.length > 0) {
-        // Mengirim semua data dari roomsCsv ke server
-        axios.post('http://localhost:8080/api/rooms', this.roomsCsv)
-          .then(response => {
-            console.log('Data added successfully:', response.data);
-            alert('Data added successfully.');
-            this.fileSelected = false;
-            window.location.reload();
-          })
-          .catch(error => {
-            console.error('Error adding data:', error);
-            alert('Failed to add data. Please try again later.');
-          });
+        const validRooms = this.roomsCsv.filter(room => {
+          const values = Object.values(room);
+          return values.every(value => value != null && value !== '');
+        });
+        if (validRooms.length > 0) {
+          axios.post('http://localhost:8080/api/rooms', validRooms)
+            .then(response => {
+              console.log('Data added successfully:', response.data);
+              alert('Data added successfully.');
+              this.fileSelected = false;
+              window.location.reload();
+            })
+            .catch(error => {
+              console.error('Error adding data:', error);
+              alert('Failed to add data. Please try again later.');
+            });
+        } else {
+          alert('No valid data to add. Please make sure all columns are filled.');
+        }
       } else {
         alert('No data to add. Please select a valid CSV file.');
       }

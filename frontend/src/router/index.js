@@ -50,7 +50,7 @@ const routes = [
   {
     path: "/",
     name: "/",
-    redirect: "/dashboard",
+    redirect: "/sign-in",
     meta: { requiresAuth: true },
   },
   {

@@ -7,7 +7,7 @@
         <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop"
           aria-controls="offcanvasTop" :disabled="!fileSelected">Preview</button>
         <button class="btn btn-success rounded-end text-dark" type="button" :disabled="!fileSelected"
-          @click="addDataToDatabase">ADD</button>
+          @click="addDataToDatabase">Import</button>
         <div class="offcanvas offcanvas-top h-100" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
           <div class="offcanvas-header">
             <h2 class="offcanvas-title m-auto" id="offcanvasTopLabel">Preview Data From CSV</h2>
@@ -115,7 +115,7 @@
           <th class="text-uppercase">Nama</th>
           <th class="text-uppercase">Merk</th>
           <th class="text-uppercase">Harga</th>
-          <th class="text-uppercase">Deskripsi</th>
+          <!-- <th class="text-uppercase">Deskripsi</th> -->
           <th class="text-uppercase">Kategori</th>
           <th class="text-uppercase">Action</th>
         </tr>
@@ -129,7 +129,7 @@
           <td>{{ inventory.nama }}</td>
           <td>{{ inventory.merk }}</td>
           <td>{{ formatRupiah(inventory.harga) }}</td>
-          <td>{{ inventory.deskripsi }}</td>
+          <!-- <td>{{ inventory.deskripsi }}</td> -->
           <td>{{ inventory.Category ? inventory.Category.nama : '' }}</td>
           <td>
             <button type="button" class="btn btn-warning" @click="redirectToEditPage(inventory.kode_aset)">Edit</button>
@@ -382,19 +382,39 @@ export default {
       return parsedData.data;
     },
     addDataToDatabase() {
-      const dataToSend = this.inventoriesCsv.length > 0 ? this.inventoriesCsv[0] : {};
-      axios.post('http://localhost:8080/api/inventories', dataToSend)
+  // Memeriksa apakah ada data di roomsCsv
+  console.log(this.inventoriesCsv.length)
+  if (this.inventoriesCsv.length > 0) {
+    // Mengirim setiap data dari roomsCsv ke server secara individu
+    this.inventoriesCsv.forEach(item => {
+      axios.post('http://localhost:8080/api/inventories', {
+        ...item,
+        harga: Number(item.harga),
+        nilai_residu: Number(item.nilai_residu),
+        masa_manfaat: Number(item.masa_manfaat),
+        depresiasi: Number(item.depresiasi),
+        tahun_1: Number(item.tahun_1),
+        tahun_2: Number(item.tahun_2),
+        tahun_3: Number(item.tahun_3),
+        tahun_4: Number(item.tahun_4),
+      })
         .then(response => {
           console.log('Data added successfully:', response.data);
-          alert('Data added successfully.');
-          this.fileSelected = false;
-          window.location.reload();
         })
-        .catch(error => {
-          console.error('Error adding data:', error);
-          alert('Failed to add data. Please try again later.');
-        });
-    },
+        // .catch(error => {
+        //   console.error('Error adding data:', error);
+        //   alert('Failed to add data. Please try again later.');
+        // });
+    });
+
+    alert('All data added successfully.');
+    this.fileSelected = false;
+    window.location.reload();
+  } else {
+    alert('No data to add. Please select a valid CSV file.');
+  }
+},
+
   },
 };
 </script>

@@ -3,6 +3,7 @@ package inventorycontroller
 import (
 	"encoding/json"
 	"net/http"
+
 	"github.com/06202003/apiInventory/helper"
 	"github.com/06202003/apiInventory/models"
 	"github.com/gorilla/mux"
@@ -66,11 +67,8 @@ func Create(w http.ResponseWriter, r *http.Request) {
 	// Create a new inventory record
 	models.DB.Create(&inventory)
 
-	
 	helper.ResponseJSON(w, http.StatusCreated, map[string]interface{}{"message": "Aset Berhasil Dibuat"})
 }
-
-
 
 func Update(w http.ResponseWriter, r *http.Request) {
 	var inventory models.Inventory
@@ -80,7 +78,6 @@ func Update(w http.ResponseWriter, r *http.Request) {
 		helper.ResponseJSON(w, http.StatusBadRequest, map[string]string{"message": err.Error()})
 		return
 	}
-
 
 	// Update the inventory record
 	if models.DB.Model(&models.Inventory{}).Where("kode_aset = ?", id).Updates(&inventory).RowsAffected == 0 {
@@ -107,4 +104,3 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 
 	helper.ResponseJSON(w, http.StatusNoContent, map[string]interface{}{"message": "Data berhasil dihapus"})
 }
-
