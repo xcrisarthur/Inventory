@@ -47,28 +47,29 @@ func Show(w http.ResponseWriter, r *http.Request) {
 // }
 
 func Create(w http.ResponseWriter, r *http.Request) {
-	var inventory models.Inventory
+  var inventories []models.Inventory
 
-	if err := json.NewDecoder(r.Body).Decode(&inventory); err != nil {
-		helper.ResponseJSON(w, http.StatusBadRequest, map[string]string{"message": err.Error()})
-		return
-	}
+  if err := json.NewDecoder(r.Body).Decode(&inventories); err != nil {
+    helper.ResponseJSON(w, http.StatusBadRequest, map[string]string{"message": err.Error()})
+    return
+  }
 
-	// Calculate Depreciation
-	depreciation := (inventory.Price - (inventory.Price / 4)) / inventory.UsefulLife
+  // Loop through each inventory item and perform necessary calculations
+  for i := range inventories {
+    depreciation := (inventories[i].Price - (inventories[i].Price / 4)) / inventories[i].UsefulLife
+    inventories[i].Depreciation = depreciation
+    inventories[i].Year1 = inventories[i].Price - depreciation
+    inventories[i].Year2 = inventories[i].Year1 - depreciation
+    inventories[i].Year3 = inventories[i].Year2 - depreciation
+    inventories[i].Year4 = inventories[i].Year3 - depreciation
 
-	// Calculate Yearly values
-	inventory.Depreciation = depreciation
-	inventory.Year1 = inventory.Price - depreciation
-	inventory.Year2 = inventory.Year1 - depreciation
-	inventory.Year3 = inventory.Year2 - depreciation
-	inventory.Year4 = inventory.Year3 - depreciation
+    // Create a new inventory record
+    models.DB.Create(&inventories[i])
+  }
 
-	// Create a new inventory record
-	models.DB.Create(&inventory)
-
-	helper.ResponseJSON(w, http.StatusCreated, map[string]interface{}{"message": "Aset Berhasil Dibuat"})
+  helper.ResponseJSON(w, http.StatusCreated, map[string]interface{}{"message": "Aset Berhasil Dibuat"})
 }
+
 
 func Update(w http.ResponseWriter, r *http.Request) {
 	var inventory models.Inventory
