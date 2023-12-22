@@ -60,7 +60,7 @@ export default {
     },
     methods: {
         createRoom() {
-            axios.post('http://localhost:8080/api/rooms', this.newRoom)
+            axios.post('http://localhost:8080/api/rooms', [this.newRoom])
                 // eslint-disable-next-line no-unused-vars
                 .then(response => {
                     this.newRoom = {};
@@ -73,7 +73,7 @@ export default {
             axios.get('http://localhost:8080/api/locations')
                 .then(response => {
                     this.locations = response.data.locations;
-                    console.log(this.locations)
+                    // console.log(this.locations)
                 })
                 .catch(error => {
                     console.error('Error fetching location:', error);

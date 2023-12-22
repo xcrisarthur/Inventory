@@ -54,6 +54,16 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
+    path: "/sign-in",
+    name: "Sign In",
+    component: SignIn,
+  },
+  {
+    path: "/sign-up",
+    name: "Sign Up",
+    component: SignUp,
+  },
+  {
     path: "/dashboard",
     name: "Dashboard",
     component: Dashboard,
@@ -257,16 +267,7 @@ const routes = [
     component: Rtl,
     meta: { requiresAuth: true },
   },
-  {
-    path: "/sign-in",
-    name: "Sign In",
-    component: SignIn,
-  },
-  {
-    path: "/sign-up",
-    name: "Sign Up",
-    component: SignUp,
-  },
+  
 ];
 
 const router = createRouter({

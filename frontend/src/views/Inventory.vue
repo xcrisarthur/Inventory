@@ -409,7 +409,7 @@ export default {
 
     alert('All data added successfully.');
     this.fileSelected = false;
-    window.location.reload();
+    // window.location.reload();
   } else {
     alert('No data to add. Please select a valid CSV file.');
   }

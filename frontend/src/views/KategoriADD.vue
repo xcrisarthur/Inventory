@@ -8,7 +8,7 @@
 
           <div class="mb-3 col">
             <label for="id_kategori" class="form-label">Category ID</label>
-            <input v-model="newCategory.id_kategori" type="text" class="form-control" id="id_kategori" required>
+            <input v-model="newCategory.id_kategori" type="text" class="form-control" id="id_kategori" maxlength="3" required>
           </div>
           <div class="mb-3 col">
             <label for="nama" class="form-label">Category Name</label>
@@ -36,7 +36,7 @@
     },
     methods: {
       createCategory() {
-        axios.post('http://localhost:8080/api/categories', this.newCategory)
+        axios.post('http://localhost:8080/api/categories', [this.newCategory])
           // eslint-disable-next-line no-unused-vars
           .then(response => {
             // Handle success, e.g., reset the form

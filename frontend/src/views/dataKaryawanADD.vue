@@ -86,7 +86,7 @@ export default {
     },
     methods: {
         createEmployee() {
-            axios.post('http://localhost:8080/api/employees', this.newEmployee)
+            axios.post('http://localhost:8080/api/employees', [this.newEmployee])
                 // eslint-disable-next-line no-unused-vars
                 .then(response => {
                     this.newEmployee = {};

@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     createLocation() {
-          axios.post('http://localhost:8080/api/locations', this.newLocation)
+          axios.post('http://localhost:8080/api/locations', [this.newLocation])
               // eslint-disable-next-line no-unused-vars
               .then(response => {
                   this.newLocation = {};
