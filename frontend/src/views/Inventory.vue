@@ -382,38 +382,22 @@ export default {
       return parsedData.data;
     },
     addDataToDatabase() {
-  // Memeriksa apakah ada data di roomsCsv
-  console.log(this.inventoriesCsv.length)
   if (this.inventoriesCsv.length > 0) {
-    // Mengirim setiap data dari roomsCsv ke server secara individu
-    this.inventoriesCsv.forEach(item => {
-      axios.post('http://localhost:8080/api/inventories', {
-        ...item,
-        harga: Number(item.harga),
-        nilai_residu: Number(item.nilai_residu),
-        masa_manfaat: Number(item.masa_manfaat),
-        depresiasi: Number(item.depresiasi),
-        tahun_1: Number(item.tahun_1),
-        tahun_2: Number(item.tahun_2),
-        tahun_3: Number(item.tahun_3),
-        tahun_4: Number(item.tahun_4),
+    axios.post('http://localhost:8080/api/inventories', this.inventoriesCsv)
+      .then(response => {
+        console.log('Data added successfully:', response.data);
+        alert('All data added successfully.');
+        this.fileSelected = false;
       })
-        .then(response => {
-          console.log('Data added successfully:', response.data);
-        })
-        // .catch(error => {
-        //   console.error('Error adding data:', error);
-        //   alert('Failed to add data. Please try again later.');
-        // });
-    });
-
-    alert('All data added successfully.');
-    this.fileSelected = false;
-    // window.location.reload();
+      .catch(error => {
+        console.error('Error adding data:', error);
+        alert('Failed to add data. Please try again later.');
+      });
   } else {
     alert('No data to add. Please select a valid CSV file.');
   }
 },
+
 
   },
 };
