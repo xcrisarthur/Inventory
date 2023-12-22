@@ -208,7 +208,7 @@ export default {
                 });
         },
         createInventory() {
-            axios.post('http://localhost:8080/api/inventories', this.newInventory)
+            axios.post('http://localhost:8080/api/inventories', [this.newInventory])
                 .then(response => {
                     this.fetchInventory();
                     this.newInventory = {};
