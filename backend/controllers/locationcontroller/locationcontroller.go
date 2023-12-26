@@ -40,7 +40,7 @@ func Create(w http.ResponseWriter, r *http.Request) {
 }
 
 func Update(w http.ResponseWriter, r *http.Request) {
-	var location []models.Location
+	var location models.Location
 	id := mux.Vars(r)["id_lokasi"]
 
 	if err := json.NewDecoder(r.Body).Decode(&location); err != nil {

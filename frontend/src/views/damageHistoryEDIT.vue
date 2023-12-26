@@ -24,6 +24,7 @@
   
 <script>
 import axios from 'axios';
+import router from '../router';
 
 export default {
   data() {
@@ -53,6 +54,8 @@ export default {
       axios.put(`http://localhost:8080/api/problemHistories/${this.damageItem.id}`, this.damageItem)
         .then(() => {
           alert('categories item updated successfully');
+          router.push({ path: `/damageHistory` });
+
         })
         .catch(error => {
           console.error('Error updating damage history item:', error);

@@ -10,8 +10,8 @@
           </div>
 
           <div class="col">
-            <div class=""><label for="kode_aset" class="form-label">Kode Aset</label>
-              <select v-model="usages.kode_aset" class="form-select" id="kode_aset">
+            <div class=""><label for="kode_aset" class="form-label">Nama Aset</label>
+              <select v-model="usages.kode_aset" class="form-select" id="kode_aset" disabled>
                 <option v-for="inventorie in inventories" :value="inventorie.kode_aset" :key="inventorie.kode_aset">
                   {{ inventorie.nama }}
                 </option>
@@ -39,7 +39,7 @@
             </div>
           </div>
 
-          <div class="col">
+          <!-- <div class="col">
             <div class="">
               <label for="status" class="form-label">Status</label>
               <select v-model="usages.status" class="form-select" id="status">
@@ -47,7 +47,7 @@
                 <option value="rusak" :key="usages.id_pemakaian">Rusak</option>
               </select>
             </div>
-          </div>
+          </div> -->
 
           <div class="col form-group">
             <button type="submit" class="btn btn-primary">Update Data</button>

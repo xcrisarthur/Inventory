@@ -54,6 +54,8 @@ export default {
   props: ["minNav", "textWhite"],
   created() {
     this.minNav;
+    // this.logout();
+
   },
   methods: {
     ...mapMutations(["navbarMinimize", "toggleConfigurator"]),

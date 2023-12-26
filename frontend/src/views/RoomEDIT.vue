@@ -14,9 +14,18 @@
                         <input v-model="roomItem.nama" type="text" class="form-control" id="nama" required>
                     </div>
 
-                    <div class="col form-group">
+                    <!-- <div class="col form-group">
                         <label for="id_lokasi" class="form-label">lokasi</label>
                         <input v-model="roomItem.id_lokasi" type="text" class="form-control" id="id_lokasi">
+                    </div> -->
+
+                    <div class="col form-group">
+                        <label for="id_lokasi" class="form-label">lokasi</label>
+                        <select v-model="roomItem.id_lokasi" class="form-select" id="id_lokasi">
+                            <option v-for="location in locations" :value="location.id_lokasi" :key="location.id_lokasi">
+                                {{ location.nama }}
+                            </option>
+                        </select>
                     </div>
 
                     <div class="col form-group">
@@ -31,6 +40,7 @@
     
 <script>
 import axios from 'axios';
+import router from '../router';
 
 export default {
     data() {
@@ -59,9 +69,11 @@ export default {
                 });
         },
         updateRoom() {
-            axios.put(`http://localhost:8080/api/rooms/${this.roomItem.id_ruangan}`, this.roomItem)
+            axios.put(`http://localhost:8080/api/rooms/${this.roomItem.id_ruangan}`, [this.roomItem])
                 .then(() => {
                     alert('Inventory item updated successfully');
+                    router.push({ path: `/Room` });
+
                 })
                 .catch(error => {
                     console.error('Error updating inventory item:', error);

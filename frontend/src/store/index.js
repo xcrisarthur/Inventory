@@ -131,10 +131,11 @@ export default createStore({
         console.error('Login error:', error);
       }
     },
-    logout({ commit }) {
-      commit('setLoggedIn', false);
-      router.push({ name: 'Sign In' });
+    logout(state) {
+      state.isLoggedIn = false;
+      localStorage.removeItem('isLoggedIn'); // Clear from local storage
     },
+  
 
     // For Fetch Data
     async fetchData({ commit }, { endpoint, dataKey, mutation }) {

@@ -51,7 +51,7 @@ const routes = [
     path: "/",
     name: "/",
     redirect: "/sign-in",
-    meta: { requiresAuth: true },
+    component: SignIn,
   },
   {
     path: "/sign-in",
@@ -276,9 +276,12 @@ const router = createRouter({
   linkActiveClass: "active",
 });
 
+// Inside your router setup
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!store.state.isLoggedIn) {
+      // Clear local storage and force user to sign in
+      localStorage.removeItem('isLoggedIn');
       next({ name: "Sign In" });
     } else {
       next();
@@ -287,5 +290,6 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
+
 
 export default router;

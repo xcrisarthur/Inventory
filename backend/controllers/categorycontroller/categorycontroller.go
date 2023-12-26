@@ -64,7 +64,7 @@ func Create(w http.ResponseWriter, r *http.Request) {
 }
 
 func Update(w http.ResponseWriter, r *http.Request) {
-	var category []models.Category
+	var category models.Category
 	id := mux.Vars(r)["id_kategori"]
 
 	// Decode JSON request body into the 'category' variable

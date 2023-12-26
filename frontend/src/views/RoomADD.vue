@@ -41,6 +41,7 @@
 
 <script>
 import axios from 'axios';
+import router from '../router';
 
 export default {
     data() {
@@ -64,6 +65,7 @@ export default {
                 // eslint-disable-next-line no-unused-vars
                 .then(response => {
                     this.newRoom = {};
+                    router.push({ path: `/Room` });
                 })
                 .catch(error => {
                     console.error('Error creating inventory:', error);

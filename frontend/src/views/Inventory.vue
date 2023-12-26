@@ -12,8 +12,7 @@
           <div class="offcanvas-header">
             <h2 class="offcanvas-title m-auto" id="offcanvasTopLabel">Preview Data From CSV</h2>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas" aria-label="Close">
-              <svg
-                xmlns="http://www.w3.org/2000/svg" height="16" width="12" viewBox="0 0 384 512">
+              <svg xmlns="http://www.w3.org/2000/svg" height="16" width="12" viewBox="0 0 384 512">
                 <path
                   d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
               </svg>
@@ -30,13 +29,13 @@
                     <th>Harga</th>
                     <th>Nilai Residu</th>
                     <th>Masa Manfaat</th>
-                    <th>Depresiasi</th>
+                    <!-- <th>Depresiasi</th>
                     <th>Tahun 1</th>
                     <th>Tahun 2</th>
                     <th>Tahun 3</th>
-                    <th>Tahun 4</th>
+                    <th>Tahun 4</th> -->
                     <th>Vendor</th>
-                    <th>Action</th>
+                    <!-- <th>Action</th> -->
                   </tr>
                 </thead>
                 <tbody>
@@ -46,17 +45,20 @@
                     <td>{{ formatRupiah(inventory.harga) }}</td>
                     <td>{{ inventory.nilai_residu }}</td>
                     <td>{{ inventory.masa_manfaat }}</td>
-                    <td>{{ inventory.depresiasi }}</td>
+                    <!-- <td>{{ inventory.depresiasi }}</td>
                     <td>{{ inventory.tahun_1 }}</td>
                     <td>{{ inventory.tahun_2 }}</td>
                     <td>{{ inventory.tahun_3 }}</td>
-                    <td>{{ inventory.tahun_4 }}</td>
+                    <td>{{ inventory.tahun_4 }}</td> -->
                     <td>{{ inventory.vendor }}</td>
                     <td>
-                      <button type="button" class="border border-dark btn btn-dark" data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop" @click="showDetailModal(inventory)">
+                      <!-- <button type="button" class="border border-dark btn btn-dark" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop">
                         Detail
-                      </button>
+                      </button> -->
+                      <!-- <button type="button" class="btn btn-secondary ms-2" data-bs-toggle="modal" v-bind:data-bs-target="'#' + inventory.kode_aset">
+                        Detail
+                      </button> -->
                     </td>
                   </tr>
                 </tbody>
@@ -130,28 +132,27 @@
           <td>{{ inventory.merk }}</td>
           <td>{{ formatRupiah(inventory.harga) }}</td>
           <!-- <td>{{ inventory.deskripsi }}</td> -->
-          <td>{{ inventory.Category ? inventory.Category.nama : '' }}</td>
+          <td>{{ inventory.Category.id_kategori }}</td>
           <td>
             <button type="button" class="btn btn-warning" @click="redirectToEditPage(inventory.kode_aset)">Edit</button>
             <button type="button" class="btn btn-danger ms-2"
               @click="deleteInventories(inventory.kode_aset)">Delete</button>
-            <button type="button" class="btn btn-secondary ms-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-              @click="showDetailModal(inventory)">
+            <button type="button" class="btn btn-secondary ms-2" data-bs-toggle="modal" v-bind:data-bs-target="'#' + inventory.kode_aset">
               Detail
             </button>
             <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-              aria-labelledby="staticBackdropLabel" aria-hidden="true" :style="{ backgroundColor: modalBackgroundColor }">
+            <div class="modal fade" v-bind:id="inventory.kode_aset" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+              aria-labelledby="inventory.kode_asetLabel" aria-hidden="true" :style="{ backgroundColor: modalBackgroundColor }">
               <div class="modal-dialog modal-dialog-scrollable modal-xl">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h1 class="modal-title fs-5 m-auto" id="staticBackdropLabel">Data {{ inventory.nama }}</h1>
+                    <h1 class="modal-title fs-5 m-auto" id="inventory.kode_asetLabel">Data {{ inventory.nama }}</h1>
                   </div>
                   <div class="modal-body">
                     <table class="table table-striped table-hover">
                       <tbody>
                         <tr>
-                          <td class="text-center align-middle" rowspan="6"> IMAGE </td>
+                          <td class="text-center align-middle" rowspan="6"> <img :src="inventory.img_url" alt="" srcset="" style="width: 150px; height: 150px; object-fit: cover;"> </td>
                           <th class="text-uppercase text-start" scope="row">Kode Aset</th>
                           <th class="text-uppercase text-start" scope="row">Nama</th>
                           <th class="text-uppercase text-start">Merk</th>
@@ -163,7 +164,7 @@
                           <td class="text-start">{{ inventory.nama }}</td>
                           <td class="text-start">{{ inventory.merk }}</td>
                           <td class="text-start">{{ inventory.deskripsi }}</td>
-                          <td class="text-start">{{ inventory.Category?.nama }}</td>
+                          <td class="text-start">{{ inventory.Category.nama }}</td>
                         </tr>
                         <tr>
                         </tr>
@@ -297,7 +298,7 @@ export default {
       }
     },
     redirectToAddPage() {
-      window.location.href = 'http://localhost:8081/InventoryADD';
+      router.push({ path: `/InventoryADD` });
     },
     redirectToEditPage(inventoryId) {
       router.push({ path: `/inventory/${inventoryId}` });
@@ -309,16 +310,16 @@ export default {
       ribuan = ribuan.join('.').split('').reverse().join('');
       return 'Rp. ' + ribuan;
     },
-    showDetailModal(inventoryId) {
-      this.selectedInventories = inventoryId;
-      this.modalBackgroundColor = 'rgba(0, 0, 0, 0.6)';
-      const modalElement = document.getElementById('staticBackdrop');
-      if (modalElement) {
-        modalElement.modal('show');
-      } else {
-        console.error('Modal element not found.');
-      }
-    },
+    // showDetailModal(inventoryId) {
+    //   this.selectedInventories = inventoryId;
+    //   this.modalBackgroundColor = 'rgba(0, 0, 0, 0.6)';
+    //   const modalElement = document.getElementById('staticBackdrop');
+    //   if (modalElement) {
+    //     modalElement.modal('show');
+    //   } else {
+    //     console.error('Modal element not found.');
+    //   }
+    // },
     generatePDFPreview() {
       const doc = new jsPDF();
       const currentDate = new Date();
@@ -369,6 +370,8 @@ export default {
             tahun_3: Number(item.tahun_3),
             tahun_4: Number(item.tahun_4),
           }));
+        // console.log("jmml", jsonData)
+
         };
 
         reader.readAsText(file);
@@ -382,38 +385,37 @@ export default {
       return parsedData.data;
     },
     addDataToDatabase() {
-  // Memeriksa apakah ada data di roomsCsv
-  console.log(this.inventoriesCsv.length)
-  if (this.inventoriesCsv.length > 0) {
-    // Mengirim setiap data dari roomsCsv ke server secara individu
-    this.inventoriesCsv.forEach(item => {
-      axios.post('http://localhost:8080/api/inventories', {
-        ...item,
-        harga: Number(item.harga),
-        nilai_residu: Number(item.nilai_residu),
-        masa_manfaat: Number(item.masa_manfaat),
-        depresiasi: Number(item.depresiasi),
-        tahun_1: Number(item.tahun_1),
-        tahun_2: Number(item.tahun_2),
-        tahun_3: Number(item.tahun_3),
-        tahun_4: Number(item.tahun_4),
-      })
-        .then(response => {
-          console.log('Data added successfully:', response.data);
-        })
-        // .catch(error => {
-        //   console.error('Error adding data:', error);
-        //   alert('Failed to add data. Please try again later.');
-        // });
-    });
+    if (this.inventoriesCsv.length > 0) {
+      this.inventoriesCsv.pop();
+      const validInventories = this.inventoriesCsv.filter(inventoryItem => {
+        return inventoryItem.masa_manfaat !== 0 && inventoryItem.harga !== 0;
+      });
+      if (validInventories.length > 0) {
+        validInventories.forEach(inventoryItem => {
+          axios.post('http://localhost:8080/api/inventories', inventoryItem)
+            // eslint-disable-next-line no-unused-vars
+            .then(response => {
+              // console.log('Data added successfully:', response.data, "csv", inventoryItem);
+            })
+            .catch(error => {
+              console.error('Error adding data:', error, validInventories[validInventories.length - 1]);
+              // alert('Failed to add data. Please try again later.');
+            });
+        });
 
-    alert('All data added successfully.');
-    this.fileSelected = false;
-    // window.location.reload();
-  } else {
-    alert('No data to add. Please select a valid CSV file.');
-  }
-},
+        alert('Valid data added successfully.');
+        this.fileSelected = false;
+        window.location.reload();
+      } else {
+        alert('No valid data to add. All rows with masa_manfaat or harga equals to 0 are ignored.');
+      }
+    } else {
+      alert('No data to add. Please select a valid CSV file.');
+    }
+  },
+
+
+
 
   },
 };

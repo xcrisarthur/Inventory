@@ -32,7 +32,8 @@
   
 <script>
   import axios from 'axios';
-  
+  import router from '../router';
+
   export default {
     data() {
       return {
@@ -61,6 +62,8 @@
           // eslint-disable-next-line no-unused-vars
           .then(response => {
             this.newDamage = {};
+            router.push({ path: `/damageHistory` });
+
           })
           .catch(error => {
             console.error('Error creating category:', error);

@@ -30,22 +30,22 @@
                       <th>Nama Karyawan</th>
                       <th>Nama Ruangan</th>
                       <th>Status</th>
-                      <th>Action</th>
+                      <!-- <th>Action</th> -->
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="usage in filteredUsagesCsv" :key="usage.id_pemakaian">
-                      <td>{{ usage.id_pemakaian }}</td>
+                      <!-- <td>{{ usage.id_pemakaian }}</td> -->
                       <td>{{ usage.kode_aset }}</td>
                       <td>{{ usage.nomor_induk }}</td>
                       <td>{{ usage.id_ruangan }}</td>
                       <td>{{ usage.status }}</td>
-                      <td>
+                      <!-- <td>
                         <button type="button" class="border border-dark btn btn-dark" data-bs-toggle="modal"
                           data-bs-target="#staticBackdrop" @click="showDetailModal(usage)">
                           Detail
                         </button>
-                      </td>
+                      </td> -->
                     </tr>
                   </tbody>
                 </table>
@@ -291,39 +291,55 @@ export default {
       return parsedData.data;
     },
     // addDataToDatabase() {
-    //   const dataToSend = this.usagesCsv.length > 0 ? this.usagesCsv[0] : {};
-    //   axios.post('http://localhost:8080/api/usages', dataToSend)
-    //     .then(response => {
-    //       console.log('Data added successfully:', response.data);
-    //       alert('Data added successfully.');
-    //       this.fileSelected = false;
-    //       window.location.reload();
-    //     })
-    //     .catch(error => {
-    //       console.error('Error adding data:', error);
-    //       alert('Failed to add data. Please try again later.');
-    //     });
+    //   // Memeriksa apakah ada data di usagesCsv
+    //   if (this.usagesCsv.length > 0) {
+    //     // Mengirim semua data dari usagesCsv ke server
+    //     axios.post('http://localhost:8080/api/usages', this.usagesCsv)
+    //       .then(response => {
+    //         console.log('Data added successfully:', response.data);
+    //         alert('Data added successfully.');
+    //         this.fileSelected = false;
+    //         window.location.reload();
+    //       })
+    //       .catch(error => {
+    //         console.error('Error adding data:', error);
+    //         alert('Failed to add data. Please try again later.');
+    //       });
+    //   } else {
+    //     alert('No data to add. Please select a valid CSV file.');
+    //   }
     // },
 
     addDataToDatabase() {
-      // Memeriksa apakah ada data di usagesCsv
-      if (this.usagesCsv.length > 0) {
-        // Mengirim semua data dari usagesCsv ke server
-        axios.post('http://localhost:8080/api/usages', this.usagesCsv)
-          .then(response => {
-            console.log('Data added successfully:', response.data);
-            alert('Data added successfully.');
-            this.fileSelected = false;
-            window.location.reload();
-          })
-          .catch(error => {
-            console.error('Error adding data:', error);
-            alert('Failed to add data. Please try again later.');
-          });
+    if (this.usagesCsv.length > 0) {
+      this.usagesCsv.pop();
+      const validUsages = this.usagesCsv.filter(usageItem => {
+        return usageItem.kode_aset !== "" && usageItem.nomor_induk !== "";
+      });
+      if (validUsages.length > 0) {
+        validUsages.forEach(usageItem => {
+          axios.post('http://localhost:8080/api/usages', usageItem)
+            // eslint-disable-next-line no-unused-vars
+            .then(response => {
+              // console.log('Data added successfully:', response.data, "csv", usageItem);
+            })
+            .catch(error => {
+              console.error('Error adding data:', error, validUsages[validUsages.length - 1]);
+              // alert('Failed to add data. Please try again later.');
+            });
+        });
+
+        alert('Valid data added successfully.');
+        this.fileSelected = false;
+        window.location.reload();
       } else {
-        alert('No data to add. Please select a valid CSV file.');
+        alert('No valid data to add. All rows with masa_manfaat or harga equals to 0 are ignored.');
       }
-    },
+    } else {
+      alert('No data to add. Please select a valid CSV file.');
+    }
+  },
+
   },
 };
 </script>

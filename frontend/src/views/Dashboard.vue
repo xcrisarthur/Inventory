@@ -1,6 +1,6 @@
 <template>
   <div class="py-4 container-fluid">
-    <!-- <div class="row text-center">
+    <div class="row text-center">
       <div class="col-sm-4 mb-4">
         <div class="card">
           <div class="card-body border border-1 border-dark rounded-3">
@@ -25,7 +25,7 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <div class="row">
       <div class="col-lg-7 mb-lg-0">

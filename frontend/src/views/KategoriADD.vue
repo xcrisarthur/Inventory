@@ -24,7 +24,8 @@
   
   <script>
   import axios from 'axios';
-  
+  import router from '../router';
+
   export default {
     data() {
       return {
@@ -41,6 +42,8 @@
           .then(response => {
             // Handle success, e.g., reset the form
             this.newCategory = {};
+            router.push({ path: `/Kategori` });
+
           })
           .catch(error => {
             console.error('Error creating category:', error);

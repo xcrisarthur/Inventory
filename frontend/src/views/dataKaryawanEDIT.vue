@@ -64,7 +64,8 @@
     
   <script>
   import axios from 'axios';
-  
+  import router from '../router';
+
   export default {
     data() {
       return {
@@ -100,6 +101,8 @@
           .then(() => {
             // Handle successful update
             alert('Inventory item updated successfully');
+            router.push({ path: `/dataKaryawan` });
+
           })
           .catch(error => {
             console.error('Error updating inventory item:', error);

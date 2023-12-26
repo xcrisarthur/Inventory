@@ -54,6 +54,12 @@ func Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Validate UsefulLife
+	if inventory.UsefulLife == 0 {
+		helper.ResponseJSON(w, http.StatusBadRequest, map[string]string{"message": "UsefulLife cannot be zero"})
+		return
+	}
+
 	// Calculate Depreciation
 	depreciation := (inventory.Price - (inventory.Price / 4)) / inventory.UsefulLife
 
@@ -64,7 +70,7 @@ func Create(w http.ResponseWriter, r *http.Request) {
 	inventory.Year3 = inventory.Year2 - depreciation
 	inventory.Year4 = inventory.Year3 - depreciation
 
-	// Create a new inventory record
+	// Create a new inventory record only if UsefulLife is not zero
 	models.DB.Create(&inventory)
 
 	helper.ResponseJSON(w, http.StatusCreated, map[string]interface{}{"message": "Aset Berhasil Dibuat"})

@@ -40,7 +40,7 @@ func Create(w http.ResponseWriter, r *http.Request) {
 }
 
 func Update(w http.ResponseWriter, r *http.Request) {
-	var employee []models.Employee
+	var employee models.Employee
 	id := mux.Vars(r)["nomor_induk"]
 
 	if err := json.NewDecoder(r.Body).Decode(&employee); err != nil {

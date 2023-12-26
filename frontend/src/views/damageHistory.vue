@@ -454,7 +454,6 @@ export default {
       dataKey: 'Kerusakan',
       mutation: 'setDamageHistoryList',
     });
-
     this.$store.dispatch('fetchData', {
       endpoint: 'repairHistories',
       dataKey: 'Perbaikan',
@@ -479,6 +478,7 @@ export default {
         axios.delete(`http://localhost:8080/api/problemHistories/${itemId}`)
           .then(() => {
             alert('Item successfully deleted.');
+            window.location.reload();
           })
           .catch(error => {
             console.error('Error deleting item:', error);
@@ -491,6 +491,7 @@ export default {
         axios.delete(`http://localhost:8080/api/repairHistories/${itemId}`)
           .then(() => {
             alert('Item successfully deleted.');
+            window.location.reload();
           })
           .catch(error => {
             console.error('Error deleting item:', error);

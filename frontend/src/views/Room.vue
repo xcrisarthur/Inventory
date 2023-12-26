@@ -35,12 +35,12 @@
                       <td>{{ room.id_ruangan }}</td>
                       <td>{{ room.nama }}</td>
                       <td>{{ room.id_lokasi }}</td>
-                      <td>
+                      <!-- <td>
                         <button type="button" class="border border-dark btn btn-dark" data-bs-toggle="modal"
                           data-bs-target="#staticBackdrop" @click="showDetailModal(room)">
                           Detail
                         </button>
-                      </td>
+                      </td> -->
                     </tr>
                   </tbody>
                 </table>
@@ -251,8 +251,9 @@ export default {
         });
         if (validRooms.length > 0) {
           axios.post('http://localhost:8080/api/rooms', validRooms)
+            // eslint-disable-next-line no-unused-vars
             .then(response => {
-              console.log('Data added successfully:', response.data);
+              // console.log('Data added successfully:', response.data);
               alert('Data added successfully.');
               this.fileSelected = false;
               window.location.reload();

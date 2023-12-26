@@ -133,6 +133,7 @@
   
 <script>
 import axios from 'axios';
+import router from '../router';
 
 export default {
     data() {
@@ -209,12 +210,14 @@ export default {
         },
         createInventory() {
             axios.post('http://localhost:8080/api/inventories', this.newInventory)
+                // eslint-disable-next-line no-unused-vars
                 .then(response => {
                     this.fetchInventory();
                     this.newInventory = {};
-                    console.log("response", response)
-                    console.log(this.fetchInventory())
+                    router.push({ path: `/Inventory` });
 
+                    // console.log("response", response)
+                    // console.log(this.fetchInventory())
                 })
                 .catch(error => {
                     console.error('Error creating inventory:', error);

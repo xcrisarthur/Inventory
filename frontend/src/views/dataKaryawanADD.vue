@@ -65,6 +65,7 @@
   
   <script>
 import axios from 'axios';
+import router from '../router';
 
 export default {
     data() {
@@ -90,7 +91,9 @@ export default {
                 // eslint-disable-next-line no-unused-vars
                 .then(response => {
                     this.newEmployee = {};
-                    console.log(response, this.newEmployee)
+                    // console.log(response, this.newEmployee)
+                    router.push({ path: `/dataKaryawan` });
+
                 })
                 .catch(error => {
                     console.error('Error creating inventory:', error);

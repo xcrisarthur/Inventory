@@ -156,6 +156,7 @@
   
 <script>
 import axios from 'axios';
+import router from '../router';
 
 export default {
   data() {
@@ -207,6 +208,8 @@ export default {
         .then(() => {
           // Handle successful update
           alert('Inventory item updated successfully');
+          router.push({ path: `/Inventory` });
+
         })
         .catch(error => {
           console.error('Error updating inventory item:', error);
