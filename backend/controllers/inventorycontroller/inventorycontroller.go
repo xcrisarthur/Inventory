@@ -54,31 +54,48 @@ func Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Validate UsefulLife
-	if inventory.UsefulLife == 0 {
-		helper.ResponseJSON(w, http.StatusBadRequest, map[string]string{"message": "UsefulLife cannot be zero"})
+	if len(inventories) == 0 {
+		helper.ResponseJSON(w, http.StatusBadRequest, map[string]string{"message": "No inventory items provided"})
 		return
 	}
 
-	// Calculate Depreciation
-	depreciation := (inventory.Price - (inventory.Price / 4)) / inventory.UsefulLife
+	// Use a database transaction
+	tx := models.DB.Begin()
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+		}
+	}()
+
 	// Loop through each inventory item and perform necessary calculations
 	for i := range inventories {
-		depreciation := (inventories[i].Price - (inventories[i].Price / 4)) / inventories[i].UsefulLife
-		inventories[i].Depreciation = depreciation
-		inventories[i].Year1 = inventories[i].Price - depreciation
-		inventories[i].Year2 = inventories[i].Year1 - depreciation
-		inventories[i].Year3 = inventories[i].Year2 - depreciation
-		inventories[i].Year4 = inventories[i].Year3 - depreciation
+		if inventories[i].UsefulLife == 0 {
+			helper.ResponseJSON(w, http.StatusBadRequest, map[string]string{"message": "UsefulLife cannot be zero"})
+			return
+		}
+
+		calculateDepreciation(&inventories[i])
 
 		// Create a new inventory record
-		models.DB.Create(&inventories[i])
+		if err := tx.Create(&inventories[i]).Error; err != nil {
+			tx.Rollback()
+			helper.ResponseJSON(w, http.StatusInternalServerError, map[string]string{"message": "Failed to create inventory record"})
+			return
+		}
 	}
 
-	// Create a new inventory record only if UsefulLife is not zero
-	models.DB.Create(&inventory)
+	// Commit the transaction if everything is successful
+	tx.Commit()
 
 	helper.ResponseJSON(w, http.StatusCreated, map[string]interface{}{"message": "Aset Berhasil Dibuat"})
+}
+
+func calculateDepreciation(inv *models.Inventory) {
+	inv.Depreciation = (inv.Price - (inv.Price / 4)) / inv.UsefulLife
+	inv.Year1 = inv.Price - inv.Depreciation
+	inv.Year2 = inv.Year1 - inv.Depreciation
+	inv.Year3 = inv.Year2 - inv.Depreciation
+	inv.Year4 = inv.Year3 - inv.Depreciation
 }
 
 func Update(w http.ResponseWriter, r *http.Request) {

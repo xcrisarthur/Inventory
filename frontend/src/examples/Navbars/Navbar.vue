@@ -43,6 +43,7 @@
 <script>
 import Breadcrumbs from "../Breadcrumbs.vue";
 import { mapMutations, mapActions } from "vuex";
+// import router from "../../router";
 
 export default {
   name: "navbar",
@@ -68,6 +69,7 @@ export default {
 
     logout() {
       this.$store.dispatch('logout');
+      // router.push({ path: `/sign-in` });
     },
   },
   components: {

@@ -108,6 +108,9 @@ export default createStore({
     setInventoriesList(state, data) {
       state.inventories = data;
     },
+    setDamageList(state, data) {
+      state.DamageList = data;
+    },
     // For Fetch Data
   },
   actions: {
@@ -134,6 +137,9 @@ export default createStore({
     logout(state) {
       state.isLoggedIn = false;
       localStorage.removeItem('isLoggedIn'); // Clear from local storage
+      // router.push({ path: `/sign-in` });
+      window.location.reload();
+
     },
   
 

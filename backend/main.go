@@ -13,6 +13,7 @@ import (
 	"github.com/06202003/apiInventory/controllers/reporthistorykerusakancontroller"
 	"github.com/06202003/apiInventory/controllers/reporthistorypemakaiancontroller"
 	"github.com/06202003/apiInventory/controllers/reporthistoryperbaikancontroller"
+	"github.com/06202003/apiInventory/controllers/logkerusakancontroller"
 	"github.com/06202003/apiInventory/controllers/roomcontroller"
 	"github.com/06202003/apiInventory/controllers/usagecontroller"
 	"github.com/06202003/apiInventory/models"
@@ -63,6 +64,9 @@ func main() {
 
 	api.HandleFunc("/usageHistories", reporthistorypemakaiancontroller.Index).Methods("GET")
 	api.HandleFunc("/usageHistories/{id}", reporthistorypemakaiancontroller.Show).Methods("GET")
+
+	api.HandleFunc("/logProblem", logkerusakancontroller.Index).Methods("GET")
+	api.HandleFunc("/logProblem/{id}", logkerusakancontroller.Show).Methods("GET")
 
 	api.HandleFunc("/repairHistories", reporthistoryperbaikancontroller.Index).Methods("GET")
 	api.HandleFunc("/repairHistories/{id_perbaikan}", reporthistoryperbaikancontroller.Show).Methods("GET")

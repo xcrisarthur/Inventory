@@ -3,6 +3,8 @@ import Dashboard from "@/views/Dashboard.vue";
 import dataAset from "@/views/dataAset.vue";
 import nilaiBuku from "@/views/nilaiBuku.vue";
 import Inventory from "@/views/Inventory.vue";
+import Damage from "@/views/Damage.vue";
+
 import dataKaryawan from "@/views/dataKaryawan.vue";
 import dataKaryawanADD from "@/views/dataKaryawanADD.vue";
 import dataKaryawanEDIT from "@/views/dataKaryawanEDIT.vue";
@@ -46,12 +48,17 @@ import InventoryADD from "@/views/InventoryADD.vue";
 import InventoryEDIT from "@/views/InventoryEDIT.vue";
 import store from "@/store/index";
 
+const defaultRoute = "/sign-in";
+
 const routes = [
   {
     path: "/",
     name: "/",
-    redirect: "/sign-in",
-    component: SignIn,
+    redirect: defaultRoute,
+  },
+  {
+    path: defaultRoute,
+    component: () => import("@/views/SignIn.vue"),
   },
   {
     path: "/sign-in",
@@ -163,6 +170,12 @@ const routes = [
     path: "/usageHistory",
     name: "usageHistory",
     component: usageHistory,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/Damage",
+    name: "Damage",
+    component: Damage,
     meta: { requiresAuth: true },
   },
   {
