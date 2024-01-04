@@ -17,7 +17,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 func Show(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	id := vars["id_portfolio_karyawan"]
+	id := vars["id_portfolio_employee"]
 
 	var portfolioEmployee models.PortfolioEmployee
 	if err := models.DB.Preload("Portfolio").Preload("Employee").First(&portfolioEmployee, "id_portfolio_karyawan = ?", id).Error; err != nil {
@@ -46,7 +46,7 @@ func Create(w http.ResponseWriter, r *http.Request) {
 
 func Update(w http.ResponseWriter, r *http.Request) {
 	var portfolioEmployee models.PortfolioEmployee
-	id := mux.Vars(r)["id_portfolio_karyawan"]
+	id := mux.Vars(r)["id_portfolio_employee"]
 
 	if err := json.NewDecoder(r.Body).Decode(&portfolioEmployee); err != nil {
 		helper.ResponseJSON(w, http.StatusBadRequest, map[string]string{"message": err.Error()})
@@ -63,7 +63,7 @@ func Update(w http.ResponseWriter, r *http.Request) {
 
 func Delete(w http.ResponseWriter, r *http.Request) {
 	var portfolioEmployee models.PortfolioEmployee
-	id := mux.Vars(r)["id_portfolio_karyawan"]
+	id := mux.Vars(r)["id_portfolio_employee"]
 
 	if err := models.DB.First(&portfolioEmployee, "id_portfolio_karyawan = ?", id).Error; err != nil {
 		helper.ResponseJSON(w, http.StatusNotFound, map[string]string{"message": "Portfolio Employee tidak ditemukan"})

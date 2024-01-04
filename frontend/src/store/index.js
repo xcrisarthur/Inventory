@@ -111,6 +111,9 @@ export default createStore({
     setDamageList(state, data) {
       state.DamageList = data;
     },
+    setSkillsList(state, data) {
+      state.skills = data;
+    },
     // For Fetch Data
   },
   actions: {

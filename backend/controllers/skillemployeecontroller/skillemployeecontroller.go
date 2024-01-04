@@ -3,7 +3,6 @@ package skillemployeecontroller
 import (
 	"encoding/json"
 	"net/http"
-
 	"github.com/06202003/apiInventory/helper"
 	"github.com/06202003/apiInventory/models"
 	"github.com/gorilla/mux"
@@ -15,18 +14,22 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	helper.ResponseJSON(w, http.StatusOK, map[string]interface{}{"skillEmployees": skillEmployees})
 }
 
+
+
 func Show(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id := vars["id_skill_karyawan"]
+    vars := mux.Vars(r)
+    id := vars["id_skill_employee"]
 
-	var skillEmployee models.SkillEmployee
-	if err := models.DB.Preload("Skill").Preload("Employee").First(&skillEmployee, "id_skill_karyawan = ?", id).Error; err != nil {
-		helper.ResponseJSON(w, http.StatusNotFound, map[string]string{"message": "Skill Employee tidak ditemukan"})
-		return
-	}
+    var skillEmployees models.SkillEmployee
+    if err := models.DB.Preload("Skill").Preload("Employee").First(&skillEmployees, "id_skill_karyawan = ?", id).Error; err != nil {
+        helper.ResponseJSON(w, http.StatusNotFound, map[string]string{"message": "Skill Employee tidak ditemukan"})
+        return
+    }
 
-	helper.ResponseJSON(w, http.StatusOK, map[string]interface{}{"skillEmployee": skillEmployee})
+    // Responding with the fetched category in the JSON format using the helper
+    helper.ResponseJSON(w, http.StatusOK, map[string]interface{}{"skillEmployee": skillEmployees})
 }
+
 
 func Create(w http.ResponseWriter, r *http.Request) {
 	var skillEmployee models.SkillEmployee
@@ -46,7 +49,7 @@ func Create(w http.ResponseWriter, r *http.Request) {
 
 func Update(w http.ResponseWriter, r *http.Request) {
 	var skillEmployee models.SkillEmployee
-	id := mux.Vars(r)["id_skill_karyawan"]
+	id := mux.Vars(r)["id_skill_employee"]
 
 	if err := json.NewDecoder(r.Body).Decode(&skillEmployee); err != nil {
 		helper.ResponseJSON(w, http.StatusBadRequest, map[string]string{"message": err.Error()})
@@ -63,7 +66,7 @@ func Update(w http.ResponseWriter, r *http.Request) {
 
 func Delete(w http.ResponseWriter, r *http.Request) {
 	var skillEmployee models.SkillEmployee
-	id := mux.Vars(r)["id_skill_karyawan"]
+	id := mux.Vars(r)["id_skill_employee"]
 
 	if err := models.DB.First(&skillEmployee, "id_skill_karyawan = ?", id).Error; err != nil {
 		helper.ResponseJSON(w, http.StatusNotFound, map[string]string{"message": "Skill Employee tidak ditemukan"})
