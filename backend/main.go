@@ -10,11 +10,15 @@ import (
 	"github.com/06202003/apiInventory/controllers/employeecontroller"
 	"github.com/06202003/apiInventory/controllers/inventorycontroller"
 	"github.com/06202003/apiInventory/controllers/locationcontroller"
+	"github.com/06202003/apiInventory/controllers/logkerusakancontroller"
+	"github.com/06202003/apiInventory/controllers/portfoliocontroller"
+	"github.com/06202003/apiInventory/controllers/portfolioemployeecontroller"
 	"github.com/06202003/apiInventory/controllers/reporthistorykerusakancontroller"
 	"github.com/06202003/apiInventory/controllers/reporthistorypemakaiancontroller"
 	"github.com/06202003/apiInventory/controllers/reporthistoryperbaikancontroller"
-	"github.com/06202003/apiInventory/controllers/logkerusakancontroller"
 	"github.com/06202003/apiInventory/controllers/roomcontroller"
+	"github.com/06202003/apiInventory/controllers/skillcontroller"
+	"github.com/06202003/apiInventory/controllers/skillemployeecontroller"
 	"github.com/06202003/apiInventory/controllers/usagecontroller"
 	"github.com/06202003/apiInventory/models"
 	"github.com/gorilla/handlers"
@@ -45,6 +49,30 @@ func main() {
 	api.HandleFunc("/employees", employeecontroller.Create).Methods("POST")
 	api.HandleFunc("/employees/{nomor_induk}", employeecontroller.Update).Methods("PUT")
 	api.HandleFunc("/employees/{nomor_induk}", employeecontroller.Delete).Methods("DELETE")
+
+	api.HandleFunc("/skills", skillcontroller.Index).Methods("GET")
+	api.HandleFunc("/skills/{id_skill}", skillcontroller.Show).Methods("GET")
+	api.HandleFunc("/skills", skillcontroller.Create).Methods("POST")
+	api.HandleFunc("/skills/{id_skill}", skillcontroller.Update).Methods("PUT")
+	api.HandleFunc("/skills/{id_skill}", skillcontroller.Delete).Methods("DELETE")
+
+	api.HandleFunc("/employeeSkills", skillemployeecontroller.Index).Methods("GET")
+	api.HandleFunc("/employeeSkills/{id_skill_employee}", skillemployeecontroller.Show).Methods("GET")
+	api.HandleFunc("/employeeSkills", skillemployeecontroller.Create).Methods("POST")
+	api.HandleFunc("/employeeSkills/{id_skill_employee}", skillemployeecontroller.Update).Methods("PUT")
+	api.HandleFunc("/employeeSkills/{id_skill_employee}", skillemployeecontroller.Delete).Methods("DELETE")
+
+	api.HandleFunc("/portfolio", portfoliocontroller.Index).Methods("GET")
+	api.HandleFunc("/portfolio/{id_portfolio}", portfoliocontroller.Show).Methods("GET")
+	api.HandleFunc("/portfolio", portfoliocontroller.Create).Methods("POST")
+	api.HandleFunc("/portfolio/{id_portfolio}", portfoliocontroller.Update).Methods("PUT")
+	api.HandleFunc("/portfolio/{id_portfolio}", portfoliocontroller.Delete).Methods("DELETE")
+
+	api.HandleFunc("/employeePortfolio", portfolioemployeecontroller.Index).Methods("GET")
+	api.HandleFunc("/employeePortfolio/{id_portfolio_employee}", portfolioemployeecontroller.Show).Methods("GET")
+	api.HandleFunc("/employeePortfolio", portfolioemployeecontroller.Create).Methods("POST")
+	api.HandleFunc("/employeePortfolio/{id_portfolio_employee}", portfolioemployeecontroller.Update).Methods("PUT")
+	api.HandleFunc("/employeePortfolio/{id_portfolio_employee}", portfolioemployeecontroller.Delete).Methods("DELETE")
 
 	api.HandleFunc("/inventories", inventorycontroller.Index).Methods("GET")
 	api.HandleFunc("/inventories/{kode_aset}", inventorycontroller.Show).Methods("GET")
