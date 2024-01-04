@@ -80,3 +80,11 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 
 	helper.ResponseJSON(w, http.StatusNoContent, map[string]interface{}{"message": "Data berhasil dihapus"})
 }
+
+func ViewByEmployeeSkill(w http.ResponseWriter, r *http.Request) {
+	id := mux.Vars(r)["nomor_induk"]
+
+	var skillEmployee []models.SkillEmployee
+	models.DB.Debug().Preload("Skill").Preload("Employee").First(&skillEmployee, "nomor_induk = ?", id)
+	helper.ResponseJSON(w, http.StatusOK, map[string]interface{}{"skillEmployee": skillEmployee})
+}

@@ -93,6 +93,51 @@
         </tbody>
       </table>
     </div>
+
+    <h1>Skill Employee List</h1>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <!-- Header Tabel -->
+        <thead class="table-dark">
+          <tr>
+            <th>Id Skill Karyawan</th>
+            <th>Id Skill</th>
+            <th>Nomor Induk</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr v-for="skillEmployee in EmployeeskillData" :key="skillEmployee.id_skill_karyawan">
+            <td>{{ skillEmployee.id_skill_karyawan }}</td>
+            <td>{{ skillEmployee.id_skill }}</td>
+            <td>{{ skillEmployee.nomor_induk }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h1>Portfolio Employee List</h1>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <!-- Header Tabel -->
+        <thead class="table-dark">
+          <tr>
+            <th>Id Portfolio Karyawan</th>
+            <th>Id Portfolio</th>
+            <th>Nomor Induk</th>
+          </tr>
+        </thead>
+
+        <!-- Tabel Portfolio -->
+        <tbody>
+          <tr v-for="Employeeportfolio in EmployeeportfolioData" :key="Employeeportfolio.id_portfolio_karyawan">
+            <td>{{ Employeeportfolio.id_portfolio_karyawan }}</td>
+            <td>{{ Employeeportfolio.id_portfolio }}</td>
+            <td>{{ Employeeportfolio.nomor_induk }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -107,6 +152,8 @@ export default {
       employeeData: [],
       skillData: [],
       portfolioData: [],
+      EmployeeskillData: [],
+      EmployeeportfolioData: [],
     };
   },
   mounted() {
@@ -141,6 +188,28 @@ export default {
       .then((response) => {
         console.log('Portfolio Data:', response.data.portfolios);
         this.portfolioData = response.data.portfolios;
+      })
+      .catch((error) => {
+        console.error('Error fetching portfolio data:', error);
+        this.error = 'Failed to fetch portfolio data';
+      });
+
+    axios
+      .get('http://localhost:8080/api/employeeSkills')
+      .then((response) => {
+        console.log('Employee Skill Data:', response.data.skillEmployees);
+        this.EmployeeskillData = response.data.skillEmployees;
+      })
+      .catch((error) => {
+        console.error('Error fetching skill data:', error);
+        this.error = 'Failed to fetch skill data';
+      });
+
+    axios
+      .get('http://localhost:8080/api/employeePortfolio')
+      .then((response) => {
+        console.log('Employee Portfolio Data:', response.data.portfolioEmployees);
+        this.EmployeeportfolioData = response.data.portfolioEmployees;
       })
       .catch((error) => {
         console.error('Error fetching portfolio data:', error);

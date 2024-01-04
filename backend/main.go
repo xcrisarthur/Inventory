@@ -62,7 +62,8 @@ func main() {
 	api.HandleFunc("/employeeSkills", skillemployeecontroller.Create).Methods("POST")
 	api.HandleFunc("/employeeSkills/{id_skill_employee}", skillemployeecontroller.Update).Methods("PUT")
 	api.HandleFunc("/employeeSkills/{id_skill_employee}", skillemployeecontroller.Delete).Methods("DELETE")
-
+	api.HandleFunc("/employeeSkills/ViewByEmployeeSkill/{id_skill_employee}", skillemployeecontroller.ViewByEmployeeSkill).Methods("GET")
+	
 	api.HandleFunc("/portfolio", portfoliocontroller.Index).Methods("GET")
 	api.HandleFunc("/portfolio/{id_portfolio}", portfoliocontroller.Show).Methods("GET")
 	api.HandleFunc("/portfolio", portfoliocontroller.Create).Methods("POST")
@@ -74,6 +75,7 @@ func main() {
 	api.HandleFunc("/employeePortfolio", portfolioemployeecontroller.Create).Methods("POST")
 	api.HandleFunc("/employeePortfolio/{id_portfolio_employee}", portfolioemployeecontroller.Update).Methods("PUT")
 	api.HandleFunc("/employeePortfolio/{id_portfolio_employee}", portfolioemployeecontroller.Delete).Methods("DELETE")
+	api.HandleFunc("/employeePortfolio/ViewByEmployeePortfolio/{id_portfolio_employee}", portfolioemployeecontroller.ViewByEmployeePortfolio).Methods("GET")
 
 	api.HandleFunc("/inventories", inventorycontroller.Index).Methods("GET")
 	api.HandleFunc("/inventories/{kode_aset}", inventorycontroller.Show).Methods("GET")
