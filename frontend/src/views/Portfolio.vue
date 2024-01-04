@@ -134,30 +134,56 @@ export default {
         margin: 10,
       };
 
-      // Add header
+      // Add title
+      pdf.setFontSize(18);
+      pdf.text('Curriculum Vitae', pdf.internal.pageSize.getWidth() / 2, options.margin, { align: 'center' });
+
+      // Add image from CDN
+      const imgData = this.selectedEmployee.gambar; // Assuming selectedEmployee.gambar is a valid CDN link
+      pdf.addImage(imgData, 'JPEG', pdf.internal.pageSize.getWidth() / 2 - 20, options.margin + 10, 40, 40);
+
+      // Add name
       pdf.setFontSize(16);
-      pdf.text(`CV - ${this.selectedEmployee.nama}`, options.margin, options.margin);
+      pdf.text(this.selectedEmployee.nama, pdf.internal.pageSize.getWidth() / 2, options.margin + 60, { align: 'center' });
 
-      // Add employee details
-      pdf.setFontSize(12);
-      pdf.text(`Nomor Induk: ${this.selectedEmployee.nomor_induk}`, options.margin, options.margin + 10);
-
-      // Add Skills
-      pdf.setFontSize(14);
-      pdf.text('Skills', options.margin, options.margin + 20);
-      pdf.setFontSize(12);
-      const skills = this.getSkillsByEmployee(this.selectedEmployee.nomor_induk);
-      skills.forEach((skill, index) => {
-        pdf.text(`${index + 1}. ${skill.nama} - Level: ${skill.level} - Notes: ${skill.notes}`, options.margin + 10, options.margin + 30 + index * 10);
+      // Add employee details in a table
+      pdf.autoTable({
+        head: [['Field', 'Value']],
+        body: [
+          ['Nama', this.selectedEmployee.nama],
+          ['Gender', this.selectedEmployee.gender],
+          ['Email', this.selectedEmployee.email],
+          ['Telepon', this.selectedEmployee.telepon],
+          ['Jabatan', this.selectedEmployee.jabatan],
+          ['Divisi', this.selectedEmployee.divisi],
+          ['Alamat', this.selectedEmployee.alamat],
+        ],
+        startY: options.margin + 80,
+        margin: { top: options.margin + 80 },
       });
 
-      // Add Portfolios
-      pdf.setFontSize(14);
-      pdf.text('Portfolios', options.margin, options.margin + 40 + skills.length * 10);
-      pdf.setFontSize(12);
+      // Add Skills in a table
+      const skills = this.getSkillsByEmployee(this.selectedEmployee.nomor_induk);
+      const skillHeaders = ['No.', 'Skill', 'Level', 'Notes'];
+      const skillData = skills.map((skill, index) => [index + 1, skill.nama, skill.level, skill.notes]);
+
+      pdf.autoTable({
+        head: [skillHeaders],
+        body: skillData,
+        startY: pdf.autoTable.previous.finalY + 10,
+        margin: { top: pdf.autoTable.previous.finalY + 10 },
+      });
+
+      // Add Portfolios in a table
       const portfolios = this.getPortfoliosByEmployee(this.selectedEmployee.nomor_induk);
-      portfolios.forEach((portfolio, index) => {
-        pdf.text(`${index + 1}. ${portfolio.nama} - ${portfolio.tanggal} - Role: ${portfolio.role} - Technology: ${portfolio.technology}`, options.margin + 10, options.margin + 50 + skills.length * 10 + index * 10);
+      const portfolioHeaders = ['No.', 'Portfolio', 'Date', 'Role', 'Technology'];
+      const portfolioData = portfolios.map((portfolio, index) => [index + 1, portfolio.nama, portfolio.tanggal, portfolio.role, portfolio.technology]);
+
+      pdf.autoTable({
+        head: [portfolioHeaders],
+        body: portfolioData,
+        startY: pdf.autoTable.previous.finalY + 10,
+        margin: { top: pdf.autoTable.previous.finalY + 10 },
       });
 
       // Save the PDF with the specified filename
