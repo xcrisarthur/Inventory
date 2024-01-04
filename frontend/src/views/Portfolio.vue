@@ -1,88 +1,155 @@
 <template>
   <div>
-    <h1>Skill List</h1>
+    <h1>Employee List</h1>
     <div class="d-flex flex-row mb-3">
       <div class="p-2 me-5">
         <button type="button" class="btn btn-success text-dark" @click="redirectToAddPage">Add Data</button>
       </div>
     </div>
-    <table class="table table-striped text-center">
-      <thead>
-        <tr>
-          <th class="text-uppercase">Id skill</th>
-          <th class="text-uppercase">Nama</th>
-          <th class="text-uppercase">Level</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="skill in filteredSkillsCsv" :key="skill.id_skill">
-          <td>{{ skill.id_skill }}</td>
-          <td>{{ skill.nama }}</td>
-          <td>{{ skill.level }}</td>
-          <!-- <td>
-            <button type="button" class="btn btn-warning" @click="redirectToEditPage(skill.id_skill)">Edit</button>
-            <button type="button" class="btn btn-danger ms-2" @click="deleteItem(skill.id_skill)">Delete</button>
-          </td> -->
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <!-- Header Tabel -->
+        <thead class="table-dark">
+          <tr>
+            <th>Nomor Induk</th>
+            <th>Image URL</th>
+            <th>Nama</th>
+            <th>Gender</th>
+            <th>Email</th>
+            <th>Telepon</th>
+            <th>Jabatan</th>
+            <th>Divisi</th>
+            <th>Alamat</th>
+          </tr>
+        </thead>
+
+        <!-- Tabel Karyawan -->
+        <tbody>
+          <tr v-for="employee in employeeData" :key="employee.nomor_induk">
+            <td>{{ employee.nomor_induk }}</td>
+            <td>{{ employee.gambar }}</td>
+            <td>{{ employee.nama }}</td>
+            <td>{{ employee.gender ? 'Laki-laki' : 'Perempuan' }}</td>
+            <td>{{ employee.email }}</td>
+            <td>{{ employee.telepon }}</td>
+            <td>{{ employee.jabatan }}</td>
+            <td>{{ employee.divisi }}</td>
+            <td>{{ employee.alamat }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h1>Skill List</h1>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <!-- Header Tabel -->
+        <thead class="table-dark">
+          <tr>
+            <th>ID Skill</th>
+            <th>Nama</th>
+            <th>Level</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+
+        <!-- Tabel Keahlian -->
+        <tbody>
+          <tr v-for="skill in skillData" :key="skill.id_skill">
+            <td>{{ skill.id_skill }}</td>
+            <td>{{ skill.nama }}</td>
+            <td>{{ skill.level }}</td>
+            <td>{{ skill.notes }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h1>Portfolio List</h1>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <!-- Header Tabel -->
+        <thead class="table-dark">
+          <tr>
+            <th>ID Portfolio</th>
+            <th>Nama</th>
+            <th>Tanggal</th>
+            <th>Deskripsi</th>
+            <th>Role</th>
+            <th>Technology</th>
+          </tr>
+        </thead>
+
+        <!-- Tabel Portfolio -->
+        <tbody>
+          <tr v-for="portfolio in portfolioData" :key="portfolio.id_portfolio">
+            <td>{{ portfolio.id_portfolio }}</td>
+            <td>{{ portfolio.nama }}</td>
+            <td>{{ portfolio.tanggal }}</td>
+            <td>{{ portfolio.deskripsi }}</td>
+            <td>{{ portfolio.role }}</td>
+            <td>{{ portfolio.technology }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import router from '../router';
-import 'jspdf-autotable';
 
 export default {
   data() {
     return {
-      skillsCsv: [],
-      selectedSkills: {},
-      fileSelected: false,
-      modalBackgroundColor: 'rgba(0, 0, 0, 0.50)',
+      loading: true,
+      error: null,
+      employeeData: [],
+      skillData: [],
+      portfolioData: [],
     };
   },
-  computed: {
-    skills() {
-      return this.$store.state.skills;
-    },
-    filteredSkills() {
-      return this.skills.filter(
-        (skills) => this.searchSkill(skills, this.searchText.toLowerCase()) && (this.selectedName === 'Nama' || skills.nama === this.selectedName) && (this.selectedLocation === 'Lokasi' || skills.Location?.nama === this.selectedLocation)
-      );
-    },
-    filteredSkillsCsv() {
-      return this.skillsCsv.filter((skills) => this.searchSkill(skills, this.searchText.toLowerCase()));
-    },
-  },
   mounted() {
-    this.$store.dispatch('fetchData', {
-      endpoint: 'skills',
-      dataKey: 'skills',
-      mutation: 'setSkillsList',
-    });
+    // Fetching data for employees
+    axios
+      .get('http://localhost:8080/api/employees')
+      .then((response) => {
+        console.log('Employee Data:', response.data.employees);
+        this.employeeData = response.data.employees;
+      })
+      .catch((error) => {
+        console.error('Error fetching employee data:', error);
+        this.error = 'Failed to fetch employee data';
+      })
+      .finally(() => {
+        this.loading = false;
+      });
+
+    axios
+      .get('http://localhost:8080/api/skills')
+      .then((response) => {
+        console.log('Skill Data:', response.data.skills);
+        this.skillData = response.data.skills;
+      })
+      .catch((error) => {
+        console.error('Error fetching skill data:', error);
+        this.error = 'Failed to fetch skill data';
+      });
+
+    axios
+      .get('http://localhost:8080/api/portfolio')
+      .then((response) => {
+        console.log('Portfolio Data:', response.data.portfolios);
+        this.portfolioData = response.data.portfolios;
+      })
+      .catch((error) => {
+        console.error('Error fetching portfolio data:', error);
+        this.error = 'Failed to fetch portfolio data';
+      });
   },
   methods: {
-    deleteItem(itemId) {
-      if (confirm('Are you sure you want to delete this item?')) {
-        axios
-          .delete(`http://localhost:8080/api/skills/${itemId}`)
-          .then(() => {
-            alert('Item successfully deleted.');
-            window.location.reload();
-          })
-          .catch((error) => {
-            console.error('Error deleting item:', error);
-            alert('Failed to delete item.');
-          });
-      }
-    },
     redirectToAddPage() {
-      window.location.href = 'http://localhost:8081/SkillADD';
-    },
-    redirectToEditPage(itemId) {
-      router.push({ path: `/skill/${itemId}` });
+      // Implement the logic to redirect to the add page
     },
   },
 };

@@ -49,6 +49,7 @@ func main() {
 	api.HandleFunc("/employees", employeecontroller.Create).Methods("POST")
 	api.HandleFunc("/employees/{nomor_induk}", employeecontroller.Update).Methods("PUT")
 	api.HandleFunc("/employees/{nomor_induk}", employeecontroller.Delete).Methods("DELETE")
+	
 
 	api.HandleFunc("/skills", skillcontroller.Index).Methods("GET")
 	api.HandleFunc("/skills/{id_skill}", skillcontroller.Show).Methods("GET")
