@@ -137,12 +137,14 @@
             <button type="button" class="btn btn-warning" @click="redirectToEditPage(inventory.kode_aset)">Edit</button>
             <button type="button" class="btn btn-danger ms-2"
               @click="deleteInventories(inventory.kode_aset)">Delete</button>
-            <button type="button" class="btn btn-secondary ms-2" data-bs-toggle="modal" v-bind:data-bs-target="'#' + inventory.kode_aset">
+            <button type="button" class="btn btn-secondary ms-2" data-bs-toggle="modal"
+              v-bind:data-bs-target="'#' + inventory.kode_aset">
               Detail
             </button>
             <!-- Modal -->
-            <div class="modal fade" v-bind:id="inventory.kode_aset" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-              aria-labelledby="inventory.kode_asetLabel" aria-hidden="true" :style="{ backgroundColor: modalBackgroundColor }">
+            <div class="modal fade" v-bind:id="inventory.kode_aset" data-bs-backdrop="static" data-bs-keyboard="false"
+              tabindex="-1" aria-labelledby="inventory.kode_asetLabel" aria-hidden="true"
+              :style="{ backgroundColor: modalBackgroundColor }">
               <div class="modal-dialog modal-dialog-scrollable modal-xl">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -152,7 +154,11 @@
                     <table class="table table-striped table-hover">
                       <tbody>
                         <tr>
-                          <td class="text-center align-middle" rowspan="6"> <img :src="inventory.img_url" alt="" srcset="" style="width: 150px; height: 150px; object-fit: cover;"> </td>
+                          <td class="text-center align-middle" rowspan="6">
+                            <img
+                              :src="inventory.img_url !== '' ? inventory.img_url : 'https://cdn.discordapp.com/attachments/1008737827346989086/1192458223970689125/no-image.png?ex=65a92643&is=6596b143&hm=faba099fbad1247eba885c2252ef426a5cdedfa5a3a6e6d330a856ef640b2151&'"
+                              alt="" style="width: 150px; height: 150px; object-fit: cover;">
+                          </td>
                           <th class="text-uppercase text-start" scope="row">Kode Aset</th>
                           <th class="text-uppercase text-start" scope="row">Nama</th>
                           <th class="text-uppercase text-start">Merk</th>
@@ -370,7 +376,7 @@ export default {
             tahun_3: Number(item.tahun_3),
             tahun_4: Number(item.tahun_4),
           }));
-        // console.log("jmml", jsonData)
+          // console.log("jmml", jsonData)
 
         };
 
@@ -385,39 +391,34 @@ export default {
       return parsedData.data;
     },
     addDataToDatabase() {
-    if (this.inventoriesCsv.length > 0) {
-      this.inventoriesCsv.pop();
-      const validInventories = this.inventoriesCsv.filter(inventoryItem => {
-        return inventoryItem.masa_manfaat !== 0 && inventoryItem.harga !== 0;
-      });
-      if (validInventories.length > 0) {
-        validInventories.forEach(inventoryItem => {
-          axios.post('http://localhost:8080/api/inventories', inventoryItem)
-            // eslint-disable-next-line no-unused-vars
-            .then(response => {
-              // console.log('Data added successfully:', response.data, "csv", inventoryItem);
-            })
-            .catch(error => {
-              console.error('Error adding data:', error, validInventories[validInventories.length - 1]);
-              // alert('Failed to add data. Please try again later.');
-            });
+      if (this.inventoriesCsv.length > 0) {
+        this.inventoriesCsv.pop();
+        const validInventories = this.inventoriesCsv.filter(inventoryItem => {
+          return inventoryItem.masa_manfaat !== 0 && inventoryItem.harga !== 0;
         });
+        if (validInventories.length > 0) {
+          validInventories.forEach(inventoryItem => {
+            axios.post('http://localhost:8080/api/inventories', inventoryItem)
+              // eslint-disable-next-line no-unused-vars
+              .then(response => {
+                // console.log('Data added successfully:', response.data, "csv", inventoryItem);
+              })
+              .catch(error => {
+                console.error('Error adding data:', error, validInventories[validInventories.length - 1]);
+                // alert('Failed to add data. Please try again later.');
+              });
+          });
 
-        alert('Valid data added successfully.');
-        this.fileSelected = false;
-        window.location.reload();
+          alert('Valid data added successfully.');
+          this.fileSelected = false;
+          window.location.reload();
+        } else {
+          alert('No valid data to add. All rows with masa_manfaat or harga equals to 0 are ignored.');
+        }
       } else {
-        alert('No valid data to add. All rows with masa_manfaat or harga equals to 0 are ignored.');
+        alert('No data to add. Please select a valid CSV file.');
       }
-    } else {
-      alert('No data to add. Please select a valid CSV file.');
-    }
-  },
-
-
-
-
-
+    },
   },
 };
 </script>
