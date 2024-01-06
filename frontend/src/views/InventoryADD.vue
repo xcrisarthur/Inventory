@@ -8,7 +8,7 @@
                     <div class="col">
                         <div class="">
                             <label for="kode_aset" class="form-label">Kode aset</label>
-                            <input v-model="newInventory.kode_aset" type="text" class="form-control" id="kode_aset" >
+                            <input v-model="newInventory.kode_aset" type="text" class="form-control" id="kode_aset">
                         </div>
                     </div>
 
@@ -29,9 +29,7 @@
                     <div class="col">
                         <div class="">
                             <label for="tanggal" class="form-label">Tanggal</label>
-<input v-model="newInventory.tanggal" type="datetime-local" class="form-control" id="tanggal">
-
-                            <!-- <input v-model="newInventory.tanggal" type="text" class="form-control" id="tanggal"> -->
+                            <input v-model="newInventory.tanggal" type="datetime-local" class="form-control" id="tanggal">
                         </div>
                     </div>
 
@@ -149,7 +147,7 @@ export default {
                 depresiasi: 0,
                 deskripsi: '',
                 status: '',
-                id_kategori: 'SPL',
+                id_kategori: '',
                 tahun_1: 0,
                 tahun_2: 0,
                 tahun_3: 0,
@@ -180,7 +178,6 @@ export default {
                     console.error('Error fetching inventory:', error);
                 });
         },
-
         fetchCategories() {
             axios.get('http://localhost:8080/api/categories')
                 .then(response => {
@@ -209,15 +206,16 @@ export default {
                 });
         },
         createInventory() {
-            axios.post('http://localhost:8080/api/inventories', this.newInventory)
+            if (!this.newInventory.img_url) {
+                this.newInventory.img_url = 'https://cdn.discordapp.com/attachments/1008737827346989086/1192458223970689125/no-image.png?ex=65a92643&is=6596b143&hm=faba099fbad1247eba885c2252ef426a5cdedfa5a3a6e6d330a856ef640b2151&';
+            }
+
+            axios.post('http://localhost:8080/api/inventories', [this.newInventory])
                 // eslint-disable-next-line no-unused-vars
                 .then(response => {
                     this.fetchInventory();
                     this.newInventory = {};
                     router.push({ path: `/Inventory` });
-
-                    // console.log("response", response)
-                    // console.log(this.fetchInventory())
                 })
                 .catch(error => {
                     console.error('Error creating inventory:', error);

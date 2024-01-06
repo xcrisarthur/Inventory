@@ -8,9 +8,9 @@
     </div>
 
     <!-- Button to select an employee for generating CV -->
-    <div class="mb-3">
-      <label for="employeeSelect">Select Employee:</label>
-      <select id="employeeSelect" v-model="selectedEmployee" @change="selectEmployee">
+    <div class="mb-3 d-flex">
+      <h3 for="employeeSelect">Select Employee : </h3>
+      <select id="employeeSelect" v-model="selectedEmployee" @change="selectEmployee" class="form-select w-25 mx-3">
         <option value="">Select an employee</option>
         <option v-for="employee in employeeData" :key="employee.nomor_induk" :value="employee">
           {{ employee.nama }}
@@ -67,27 +67,27 @@ export default {
     try {
       // Fetching data for employees
       const employeesResponse = await axios.get('http://localhost:8080/api/employees');
-      console.log('Employee Data:', employeesResponse.data.employees);
+      // console.log('Employee Data:', employeesResponse.data.employees);
       this.employeeData = employeesResponse.data.employees;
 
       // Fetching data for skills
       const skillsResponse = await axios.get('http://localhost:8080/api/skills');
-      console.log('Skill Data:', skillsResponse.data.skills);
+      // console.log('Skill Data:', skillsResponse.data.skills);
       this.skillData = skillsResponse.data.skills;
 
       // Fetching data for portfolios
       const portfoliosResponse = await axios.get('http://localhost:8080/api/portfolio');
-      console.log('Portfolio Data:', portfoliosResponse.data.portfolios);
+      // console.log('Portfolio Data:', portfoliosResponse.data.portfolios);
       this.portfolioData = portfoliosResponse.data.portfolios;
 
       // Fetching data for employee skills
       const employeeSkillsResponse = await axios.get('http://localhost:8080/api/employeeSkills');
-      console.log('Employee Skill Data:', employeeSkillsResponse.data.skillEmployees);
+      // console.log('Employee Skill Data:', employeeSkillsResponse.data.skillEmployees);
       this.EmployeeskillData = employeeSkillsResponse.data.skillEmployees;
 
       // Fetching data for employee portfolios
       const employeePortfoliosResponse = await axios.get('http://localhost:8080/api/employeePortfolio');
-      console.log('Employee Portfolio Data:', employeePortfoliosResponse.data.portfolioEmployees);
+      // console.log('Employee Portfolio Data:', employeePortfoliosResponse.data.portfolioEmployees);
       this.EmployeeportfolioData = employeePortfoliosResponse.data.portfolioEmployees;
     } catch (error) {
       console.error('Error fetching data:', error);
