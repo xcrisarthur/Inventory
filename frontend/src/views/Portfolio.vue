@@ -47,6 +47,8 @@
 <script>
 import axios from 'axios';
 import jsPDF from 'jspdf';
+import headerImg from '@/assets/img/header.png';
+import footerImg from '@/assets/img/footer.png';
 
 export default {
   data() {
@@ -132,35 +134,60 @@ export default {
       // Set options
       const options = {
         margin: 10,
+        fontSize: 12,
+        headerTextColor: '#000000', // White text for headers
+        headerColor: '#b5b5b5', // Header background color for grid theme
       };
 
-      // Add title
-      pdf.setFontSize(18);
-      pdf.text('Curriculum Vitae', pdf.internal.pageSize.getWidth() / 2, options.margin, { align: 'center' });
-
-      // Add image from CDN
-      const imgData = this.selectedEmployee.gambar; // Assuming selectedEmployee.gambar is a valid CDN link
-      pdf.addImage(imgData, 'JPEG', pdf.internal.pageSize.getWidth() / 2 - 20, options.margin + 10, 40, 40);
-
-      // Add name
-      pdf.setFontSize(16);
-      pdf.text(this.selectedEmployee.nama, pdf.internal.pageSize.getWidth() / 2, options.margin + 60, { align: 'center' });
-
-      // Add employee details in a table
+      // Set Header with Image using autoTable
       pdf.autoTable({
-        head: [['Field', 'Value']],
+        margin: { top: 0 },
+        beforePageContent: function () {
+          pdf.addImage(headerImg, 'PNG', 0, 0, 210, 27.5);
+        },
+      });
+
+      // Set Footer with Image using autoTable
+      pdf.autoTable({
+        margin: { bottom: 0 },
+        afterPageContent: function () {
+          pdf.addImage(footerImg, 'PNG', 0, pdf.internal.pageSize.height - 35, 210, 35);
+        },
+      });
+
+      // Add title with margin
+      const titleMargin = 30; // Adjust this value as needed
+      pdf.setFontSize(28);
+      pdf.text('Curriculum Vitae', pdf.internal.pageSize.getWidth() / 2, options.margin + titleMargin, { align: 'center', startY: options.margin + titleMargin });
+
+      // Add image to the left
+      const imgData = this.selectedEmployee.gambar; // Assuming selectedEmployee.gambar is a valid CDN link
+      pdf.addImage(imgData, 'JPEG', options.margin, options.margin + 50, 40, 40);
+
+      // Add employee details to the right
+      pdf.autoTable({
+        theme: 'grid', // Set theme to 'grid'
+        headStyles: { textColor: options.headerTextColor, fontSize: options.fontSize },
+        bodyStyles: { textColor: '#000000', fontSize: options.fontSize },
         body: [
           ['Nama', this.selectedEmployee.nama],
           ['Gender', this.selectedEmployee.gender],
+          ['Alamat', this.selectedEmployee.alamat],
           ['Email', this.selectedEmployee.email],
           ['Telepon', this.selectedEmployee.telepon],
           ['Jabatan', this.selectedEmployee.jabatan],
           ['Divisi', this.selectedEmployee.divisi],
-          ['Alamat', this.selectedEmployee.alamat],
         ],
-        startY: options.margin + 80,
-        margin: { top: options.margin + 80 },
+        startY: options.margin + 40,
+        margin: { top: options.margin + 10, left: 60 },
+        tableLineColor: [0, 0, 0],
+        tableLineWidth: 0.2,
+        styles: { cellWidth: 'wrap', cellPadding: 2, border: '1', halign: 'left' },
       });
+
+      // Add Keahlian (Skills) section
+      pdf.setFontSize(20);
+      pdf.text('Keahlian', pdf.internal.pageSize.getWidth() / 2, pdf.autoTable.previous.finalY + 15, { align: 'center' });
 
       // Add Skills in a table
       const skills = this.getSkillsByEmployee(this.selectedEmployee.nomor_induk);
@@ -168,11 +195,21 @@ export default {
       const skillData = skills.map((skill, index) => [index + 1, skill.nama, skill.level, skill.notes]);
 
       pdf.autoTable({
+        theme: 'grid', // Set theme to 'grid'
+        headStyles: { fillColor: options.headerColor, textColor: options.headerTextColor, fontSize: options.fontSize },
+        bodyStyles: { textColor: '#000000', fontSize: options.fontSize },
         head: [skillHeaders],
         body: skillData,
-        startY: pdf.autoTable.previous.finalY + 10,
-        margin: { top: pdf.autoTable.previous.finalY + 10 },
+        startY: pdf.autoTable.previous.finalY + 20,
+        margin: { top: pdf.autoTable.previous.finalY + 20 },
+        tableLineColor: [0, 0, 0],
+        tableLineWidth: 0.2,
+        styles: { cellWidth: 'wrap', cellPadding: 2, border: '1', halign: 'left' },
       });
+
+      // Add Portfolio section
+      pdf.setFontSize(20);
+      pdf.text('Portfolio', pdf.internal.pageSize.getWidth() / 2, pdf.autoTable.previous.finalY + 15, { align: 'center' });
 
       // Add Portfolios in a table
       const portfolios = this.getPortfoliosByEmployee(this.selectedEmployee.nomor_induk);
@@ -180,14 +217,21 @@ export default {
       const portfolioData = portfolios.map((portfolio, index) => [index + 1, portfolio.nama, portfolio.tanggal, portfolio.role, portfolio.technology]);
 
       pdf.autoTable({
+        theme: 'grid', // Set theme to 'grid'
+        headStyles: { fillColor: options.headerColor, textColor: options.headerTextColor, fontSize: options.fontSize },
+        bodyStyles: { textColor: '#000000', fontSize: options.fontSize },
         head: [portfolioHeaders],
         body: portfolioData,
-        startY: pdf.autoTable.previous.finalY + 10,
-        margin: { top: pdf.autoTable.previous.finalY + 10 },
+        startY: pdf.autoTable.previous.finalY + 20,
+        margin: { top: pdf.autoTable.previous.finalY + 20 },
+        tableLineColor: [0, 0, 0],
+        tableLineWidth: 0.2,
+        styles: { cellWidth: 'wrap', cellPadding: 2, border: '1', halign: 'left' },
       });
 
       // Save the PDF with the specified filename
-      pdf.save('employee_cv.pdf');
+      const fileName = `WIT-${this.selectedEmployee.nama.replace(/\s+/g, '_')}.pdf`;
+      pdf.save(fileName);
     },
   },
 };
