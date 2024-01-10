@@ -187,9 +187,9 @@
                         <tr>
                           <td class="text-start">{{ inventory.tanggal }}</td>
                           <td class="text-start">{{ inventory.masa_manfaat }}</td>
-                          <td class="text-start">{{ inventory.depresiasi }}</td>
-                          <td class="text-start">{{ inventory.harga }}</td>
-                          <td class="text-start">{{ inventory.nilai_residu }}</td>
+                          <td class="text-start">{{ formatRupiah(inventory.depresiasi) }}</td>
+                          <td class="text-start">{{ formatRupiah(inventory.harga) }}</td>
+                          <td class="text-start">{{ formatRupiah(inventory.nilai_residu) }}</td>
                         </tr>
                         <tr>
                         </tr>
@@ -205,10 +205,10 @@
                           <th class="text-uppercase text-start">Vendor</th>
                         </tr>
                         <tr>
-                          <td class="text-start">{{ inventory.tahun_1 }}</td>
-                          <td class="text-start">{{ inventory.tahun_2 }}</td>
-                          <td class="text-start">{{ inventory.tahun_3 }}</td>
-                          <td class="text-start">{{ inventory.tahun_4 }}</td>
+                          <td class="text-start">{{ formatRupiah(inventory.tahun_1) }}</td>
+                          <td class="text-start">{{ formatRupiah(inventory.tahun_2) }}</td>
+                          <td class="text-start">{{ formatRupiah(inventory.tahun_3) }}</td>
+                          <td class="text-start">{{ formatRupiah(inventory.tahun_4) }}</td>
                           <td class="text-start">{{ inventory.vendor }}</td>
                         </tr>
                       </tbody>

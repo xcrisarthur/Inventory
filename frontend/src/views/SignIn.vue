@@ -33,6 +33,10 @@
                     style="background-color: #CE3534; font-weight: bolder">L o g i n</button>
                 </div>
               </form>
+              <div>
+                <button type="button" class="btn w-100 btn-success mt-2" @click="redirectPage()">Don't have an account?
+                  register here</button>
+              </div>
             </div>
           </div>
         </div>
@@ -44,12 +48,12 @@
 <script>
 const body = document.getElementsByTagName("body")[0];
 import { mapMutations } from "vuex";
-
+import router from "../router";
 export default {
   data() {
     return {
-      email: '',
-      password: '',
+      email: '2172003@maranatha.ac.id',
+      password: 'David123*#',
     };
   },
   created() {
@@ -76,6 +80,9 @@ export default {
       } catch (error) {
         console.error('Login error:', error);
       }
+    },
+    redirectPage() {
+      router.push({ path: `/sign-up` });
     },
   },
 };

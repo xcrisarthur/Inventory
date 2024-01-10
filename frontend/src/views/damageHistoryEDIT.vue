@@ -5,11 +5,11 @@
       <div class="row row-cols-2 row-cols-lg-3 g-lg-3">
         <div class="mb-3 col">
           <label for="id" class="form-label">ID</label>
-          <input v-model="damageItem.id" type="text" class="form-control" id="id" required>
+          <input v-model="damageItem.id" type="text" class="form-control" id="id" disabled>
         </div>
         <div class="mb-3 col">
           <label for="id_pemakaian" class="form-label">Id Pemakaian</label>
-          <input v-model="damageItem.id_pemakaian" type="text" class="form-control" id="id_pemakaian" required>
+          <input v-model="damageItem.id_pemakaian" type="text" class="form-control" id="id_pemakaian" disabled>
         </div>
         <div class="mb-3 col">
           <label for="tanggal_kerusakan" class="form-label">Tanggal Kerusakan</label>

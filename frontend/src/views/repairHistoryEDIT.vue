@@ -7,21 +7,25 @@
 
         <div class="mb-3 col">
           <label for="id_perbaikan" class="form-label">id_perbaikan</label>
-          <input v-model="repairItem.id_perbaikan" type="text" class="form-control" id="id_perbaikan" required>
+          <input v-model="repairItem.id_perbaikan" type="text" class="form-control" id="id_perbaikan" disabled>
         </div>
+        <div class="mb-3 col">
+          <label for="id" class="form-label">id</label>
+          <select v-model="repairItem.id" class="form-select" id="id" disabled>
+            <option v-for="problem in problemHistories" :value="problem.id" :key="problem.id">
+              {{ problem.Usage.Inventory.nama }}
+            </option>
+          </select>
+        </div>
+        <div class="mb-3 col">
+          <label for="deskripsi" class="form-label">deskripsi</label>
+          <input v-model="repairItem.deskripsi" type="text" class="form-control" id="deskripsi" required>
+        </div>
+        
         <div class="mb-3 col">
           <label for="tanggal_perbaikan" class="form-label">tanggal_perbaikan</label>
           <input v-model="repairItem.tanggal_perbaikan" type="datetime-local" class="form-control" id="tanggal_perbaikan"
             required>
-        </div>
-        <div class="mb-3 col">
-          <label for="biaya" class="form-label">biaya</label>
-          <input v-model="repairItem.biaya" type="number" class="form-control" id="biaya" required>
-        </div>
-
-        <div class="mb-3 col">
-          <label for="deskripsi" class="form-label">deskripsi</label>
-          <input v-model="repairItem.deskripsi" type="text" class="form-control" id="deskripsi" required>
         </div>
         <div class="mb-3 col">
           <label for="tanggal_kerusakan" class="form-label">tanggal_kerusakan</label>
@@ -33,20 +37,19 @@
             id="tanggal_selesai_perbaikan" required>
         </div>
         <div class="mb-3 col">
+          <label for="biaya" class="form-label">biaya</label>
+          <input v-model="repairItem.biaya" type="number" class="form-control" id="biaya" required>
+        </div>
+
+
+ 
+
+        <div class="mb-3 col">
           <label for="tempat_perbaikan" class="form-label">tempat_perbaikan</label>
           <input v-model="repairItem.tempat_perbaikan" type="text" class="form-control" id="tempat_perbaikan" required>
         </div>
 
-        <div class="mb-3 col">
-          <label for="id" class="form-label">id</label>
-          <!-- <input v-model="repairItem.id" type="text" class="form-control" id="id" required> -->
 
-          <select v-model="repairItem.id" class="form-select" id="id">
-            <option v-for="problem in problemHistories" :value="problem.id" :key="problem.id">
-              {{ problem.Usage.Inventory.nama }}
-            </option>
-          </select>
-        </div>
 
 
 
@@ -105,6 +108,7 @@ export default {
           console.error('Error updating damage history item:', error);
         });
     },
+
     fetchProblemHistories() {
       axios.get('http://localhost:8080/api/problemHistories')
         .then(response => {

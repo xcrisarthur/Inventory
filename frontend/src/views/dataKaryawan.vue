@@ -109,11 +109,11 @@
         <th class="text-uppercase"> Gambar </th>
         <th class="text-uppercase"> Nama </th>
         <th class="text-uppercase"> Email </th>
-        <th class="text-uppercase"> Telepon </th>
+        <!-- <th class="text-uppercase"> Telepon </th> -->
         <th class="text-uppercase"> Jabatan </th>
         <th class="text-uppercase"> Divisi </th>
-        <th class="text-uppercase"> Gender </th>
-        <th class="text-uppercase"> alamat </th>
+        <!-- <th class="text-uppercase"> Gender </th> -->
+        <!-- <th class="text-uppercase"> alamat </th> -->
 
         <th class="text-uppercase"> action </th>
       </tr>
@@ -126,11 +126,11 @@
         </td>
         <td>{{ employee.nama }}</td>
         <td>{{ employee.email }}</td>
-        <td>{{ employee.telepon }}</td>
+        <!-- <td>{{ employee.telepon }}</td> -->
         <td>{{ employee.jabatan }}</td>
         <td>{{ employee.divisi }}</td>
-        <td>{{ getGenderText(employee.gender) }}</td>
-        <td>{{ employee.alamat }}</td>
+        <!-- <td>{{ getGenderText(employee.gender) }}</td> -->
+        <!-- <td>{{ employee.alamat }}</td> -->
         <td>
           <button type="button" class="btn btn-warning" @click="redirectToEditPage(employee.nomor_induk)">Edit</button>
           <button type="button" class="btn btn-danger ms-2" @click="deleteItem(employee.nomor_induk)">Delete</button>
@@ -138,19 +138,27 @@
             @click="showDetailModal(employee)">
             Detail
           </button> -->
+          <button type="button" class="btn btn-secondary ms-2" data-bs-toggle="modal"
+              v-bind:data-bs-target="'#' + employee.nomor_induk">
+              Detail
+            </button>
 
-          <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true"> -->
+            <div class="modal fade" v-bind:id="employee.nomor_induk" data-bs-backdrop="static" data-bs-keyboard="false"
+              tabindex="-1" aria-labelledby="employee.nomor_indukLabel" aria-hidden="true"
+              :style="{ backgroundColor: modalBackgroundColor }">
+
             <div class="modal-dialog modal-dialog-scrollable modal-xl">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h1 class="modal-title fs-5 m-auto" id="staticBackdropLabel">Data {{ employees.nama }}</h1>
+                  <h1 class="modal-title fs-5 m-auto" id="staticBackdropLabel">Data {{ employee.nama }}</h1>
                 </div>
                 <div class="modal-body">
                   <table class="table table-striped table-hover">
                     <tbody>
                       <tr>
-                        <td class="text-center align-middle" rowspan="6"> Gambar </td>
+                        <td class="text-center align-middle" rowspan="6"> <img :src="employee.gambar" alt="" srcset="" style="width: 100px; height: 100px; object-fit: cover;"> </td>
                         <th class="text-uppercase text-start" scope="row">Nomor Induk</th>
                         <th class="text-uppercase text-start" scope="row">Nama</th>
                         <th class="text-uppercase text-start">Gender</th>
@@ -158,12 +166,12 @@
                       </tr>
 
                       <tr>
-                        <td class="text-start">{{ employees.nomor_induk }}</td>
-                        <td class="text-start">{{ employees.nama }}</td>
-                        <!-- <td class="text-start">{{ employees.gender }}</td> -->
-                        <td class="text-start">{{ getGenderText(employees.gender) }}</td>
+                        <td class="text-start">{{ employee.nomor_induk }}</td>
+                        <td class="text-start">{{ employee.nama }}</td>
+                        <!-- <td class="text-start">{{ employee.gender }}</td> -->
+                        <td class="text-start">{{ getGenderText(employee.gender) }}</td>
 
-                        <td class="text-start">{{ employees.email }}</td>
+                        <td class="text-start">{{ employee.email }}</td>
                       </tr>
 
                       <tr>
@@ -182,10 +190,10 @@
                       </tr>
 
                       <tr>
-                        <td class="text-start">{{ employees.telepon }}</td>
-                        <td class="text-start">{{ employees.jabatan }}</td>
-                        <td class="text-start">{{ employees.divisi }}</td>
-                        <td class="text-start">{{ employees.alamat }}</td>
+                        <td class="text-start">{{ employee.telepon }}</td>
+                        <td class="text-start">{{ employee.jabatan }}</td>
+                        <td class="text-start">{{ employee.divisi }}</td>
+                        <td class="text-start">{{ employee.alamat }}</td>
                       </tr>
                     </tbody>
                   </table>

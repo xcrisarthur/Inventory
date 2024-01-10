@@ -92,19 +92,17 @@
                   <table class="table table-striped table-hover">
                     <tbody>
                       <tr>
-                        <td class="text-center align-middle" rowspan="6">IMAGE</td>
+                        <td class="text-center align-middle" rowspan="6"><img :src="DamageHistory.Usage.Inventory.img_url" alt="" srcset="" style="width: 100px; height: 100px; object-fit: cover;"></td>
                         <th class="text-uppercase text-start" scope="row">nama Ruangan</th>
                         <th class="text-uppercase text-start" scope="row">Lokasi & Alamat</th>
                         <th class="text-uppercase text-start">Nama Karyawan</th>
                         <th class="text-uppercase text-start">nama Item</th>
-                        <th class="text-uppercase text-start">Kategori item</th>
                       </tr>
                       <tr>
                         <td class="text-start">{{ DamageHistory.Usage.Room.nama }}</td>
                         <td class="text-start">{{ DamageHistory.Usage.Room.Location.nama }} - {{ DamageHistory.Usage.Room.Location.alamat }}</td>
                         <td class="text-start">{{ DamageHistory.Usage.Employee.nama }}</td>
                         <td class="text-start">{{ DamageHistory.Usage.Inventory.nama }}</td>
-                        <td class="text-start">{{ DamageHistory.Usage.Inventory.Category?.nama }}</td>
                       </tr>
                       <tr></tr>
                       <tr>
@@ -112,6 +110,8 @@
                       </tr>
                       <tr class="mt-2">
                         <th class="text-uppercase text-start">Tanggal Kerusakan</th>
+                        <th class="text-uppercase text-start">Kategori item</th>
+
                         <!-- <th class="text-uppercase text-start">Masa Manfaat</th>
                         <th class="text-uppercase text-start">Depresiasi</th>
                         <th class="text-uppercase text-start">Harga</th>
@@ -119,6 +119,8 @@
                       </tr>
                       <tr>
                         <td class="text-start">{{ DamageHistory.tanggal_kerusakan }}</td>
+                        <td class="text-start">{{ DamageHistory.Usage.Inventory.Category?.nama }}</td>
+
                         <!-- <td class="text-start">{{ inventory.masa_manfaat }}</td>
                         <td class="text-start">{{ inventory.depresiasi }}</td>
                         <td class="text-start">{{ inventory.harga }}</td>
@@ -232,7 +234,7 @@
         <td>{{ RepairHistory.ReportHistoryKerusakan.Usage.Inventory.nama }}</td>
         <td>{{ RepairHistory.tanggal_selesai_perbaikan }}</td>
 
-        <td>{{ RepairHistory.biaya }}</td>
+        <td>{{ formatRupiah(RepairHistory.biaya)  }}</td>
         <td>{{ RepairHistory.deskripsi }}</td>
         <!-- <td>{{ RepairHistory.tanggal_kerusakan }}</td> -->
         <!-- <td>{{ RepairHistory.id_pemakaian }}</td> -->
@@ -252,19 +254,17 @@
                   <table class="table table-striped table-hover">
                     <tbody>
                       <tr>
-                        <td class="text-center align-middle" rowspan="6">IMAGE</td>
+                        <td class="text-center align-middle" rowspan="6"><img :src="RepairHistory.ReportHistoryKerusakan.Usage.Inventory.img_url" alt="" srcset="" style="width: 100px; height: 100px; object-fit: cover;"></td>
                         <th class="text-uppercase text-start" scope="row">nama Ruangan</th>
                         <th class="text-uppercase text-start" scope="row">Lokasi & Alamat</th>
                         <th class="text-uppercase text-start">Nama Karyawan</th>
                         <th class="text-uppercase text-start">nama Item</th>
-                        <th class="text-uppercase text-start">Kategori item</th>
                       </tr>
                       <tr>
                         <td class="text-start">{{ RepairHistory.ReportHistoryKerusakan.Usage.Room.nama }}</td>
                         <td class="text-start">{{ RepairHistory.ReportHistoryKerusakan.Usage.Room.Location.nama }} - {{ RepairHistory.ReportHistoryKerusakan.Usage.Room.Location.alamat }}</td>
                         <td class="text-start">{{ RepairHistory.ReportHistoryKerusakan.Usage.Employee.nama }}</td>
                         <td class="text-start">{{ RepairHistory.ReportHistoryKerusakan.Usage.Inventory.nama }}</td>
-                        <td class="text-start">{{ RepairHistory.ReportHistoryKerusakan.Usage.Inventory.Category?.nama }}</td>
                       </tr>
                       <tr></tr>
                       <tr>
@@ -275,14 +275,12 @@
                         <th class="text-uppercase text-start">tanggal_perbaikan</th>
                         <th class="text-uppercase text-start">biaya</th>
                         <th class="text-uppercase text-start">deskripsi</th>
-                        <th class="text-uppercase text-start">tanggal_selesai_perbaikan</th>
                       </tr>
                       <tr>
                         <td class="text-start">{{ RepairHistory.tanggal_kerusakan }}</td>
                         <td class="text-start">{{ RepairHistory.tanggal_perbaikan }}</td>
                         <td class="text-start">{{ RepairHistory.biaya }}</td>
                         <td class="text-start">{{ RepairHistory.deskripsi }}</td>
-                        <td class="text-start">{{ RepairHistory.tanggal_selesai_perbaikan }}</td>
                       </tr>
                       <tr></tr>
                       <tr>
@@ -290,18 +288,18 @@
                         <td colspan="8" class="invisible">.</td>
                       </tr>
                       <tr>
-                        <!-- <th class="text-uppercase text-start">Tahun 1</th>
-                        <th class="text-uppercase text-start">Tahun 2</th>
-                        <th class="text-uppercase text-start">Tahun 3</th>
-                        <th class="text-uppercase text-start">Tahun 4</th>
-                        <th class="text-uppercase text-start">Vendor</th> -->
+                        <th class="text-uppercase text-start">Kategori item</th>
+                        <th class="text-uppercase text-start">Tanggal Selesai Perbaikan</th>
+                        <!-- <th class="text-uppercase text-start">Tahun 3</th>
+                        <th class="text-uppercase text-start">Tahun 4</th> -->
+                        <!-- <th class="text-uppercase text-start">Vendor</th> -->
                       </tr>
                       <tr>
-                        <!-- <td class="text-start">{{ inventory.tahun_1 }}</td>
-                        <td class="text-start">{{ inventory.tahun_2 }}</td>
-                        <td class="text-start">{{ inventory.tahun_3 }}</td>
-                        <td class="text-start">{{ inventory.tahun_4 }}</td>
-                        <td class="text-start">{{ inventory.vendor }}</td> -->
+                        <td class="text-start">{{ RepairHistory.ReportHistoryKerusakan.Usage.Inventory.Category?.nama }}</td>
+                        <td class="text-start">{{ RepairHistory.tanggal_selesai_perbaikan }}</td>
+                        <!-- <td class="text-start">{{ inventory.tahun_3 }}</td>
+                        <td class="text-start">{{ inventory.tahun_4 }}</td> -->
+                        <!-- <td class="text-start">{{ inventory.vendor }}</td> -->
                       </tr>
                     </tbody>
                   </table>
@@ -465,6 +463,13 @@ export default {
     },
     redirectToRepairEditPage(id) {
       router.push({ path: `/repairHistory/${id}` });
+    },
+    formatRupiah(angka) {
+      const stringValue = angka?.toString() || '0';
+      var reverse = stringValue.split('').reverse().join(''),
+        ribuan = reverse.match(/\d{1,3}/g);
+      ribuan = ribuan.join('.').split('').reverse().join('');
+      return 'Rp. ' + ribuan;
     },
     deleteDamageHistory(itemId) {
       if (confirm('Are you sure you want to delete this item?')) {
