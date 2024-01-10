@@ -35,6 +35,10 @@ export default createStore({
     employees: [],
     locations: [],
     inventories: [],
+    skills: [],
+    portofolios: [],
+    skillsEmployee: [],
+    portofoliosEmployee: [],
     // For Fetch Data
   },
   mutations: {
@@ -113,6 +117,15 @@ export default createStore({
     },
     setSkillsList(state, data) {
       state.skills = data;
+    },
+    setPortofoliosList(state, data) {
+      state.portofolios = data;
+    },
+    setSkillsEmployeeList(state, data) {
+      state.skillsEmployee = data;
+    },
+    setPortofoliosEmployeeList(state, data) {
+      state.portofoliosEmployee = data;
     },
     // For Fetch Data
   },

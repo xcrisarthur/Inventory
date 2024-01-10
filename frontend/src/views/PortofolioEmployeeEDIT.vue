@@ -1,0 +1,121 @@
+<template>
+    <div>
+        <h1>Edit Portfolio Employee</h1>
+        <div class="container">
+            <form @submit.prevent="updateSkills">
+                <div class="row row-cols-2 row-cols-lg-3 g-lg-3">
+                    <div class="col">
+                        <div class="">
+                            <label for="id_portfolio_karyawan" class="form-label">ID PORTFOLIO KARYAWAN</label>
+                            <input v-model="newSkill.id_portfolio_karyawan" type="text" class="form-control"
+                                id="id_portfolio_karyawan" disabled>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="">
+                            <label for="id_portfolio" class="form-label">ID PORTFOLIO</label>
+                            <select v-model="newSkill.id_portfolio" class="form-select" id="id_portfolio">
+                                <option v-for="portfolio in portfolios" :value="portfolio.id_portfolio"
+                                    :key="portfolio.id_portfolio">
+                                    {{ portfolio.nama }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="">
+                            <label for="nomor_induk" class="form-label">NOMOR INDUK</label>
+                            <select v-model="newSkill.nomor_induk" class="form-select" id="nomor_induk">
+                                <option v-for="employee in employees" :value="employee.nomor_induk"
+                                    :key="employee.nomor_induk">
+                                    {{ employee.nama }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col form-group">
+                        <button type="submit" class="btn btn-primary">Update Data</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</template>
+    
+<script>
+import axios from 'axios';
+import router from '../router';
+
+export default {
+    data() {
+        return {
+            newSkill: {
+                id_portfolio_karyawan: '',
+                id_portfolio: '',
+                nomor_induk: '',
+            },
+            portfolios: [],
+            employees: [],
+        };
+    },
+    created() {
+        this.fetchSkillsItem();
+    },
+    mounted() {
+        this.fetchPortfolios();
+        this.fetchEmployees();
+
+    },
+    methods: {
+        updateSkills() {
+            axios.put(`http://localhost:8080/api/employeePortfolio/${this.newSkill.id_portfolio_karyawan}`, this.newSkill)
+                .then(() => {
+                    alert('skills item updated successfully');
+                    router.push({ path: `/PortofolioEmployee` });
+
+                })
+                .catch(error => {
+                    console.error('Error updating skills item:', error);
+                });
+        },
+        fetchSkillsItem() {
+            const itemId = this.$route.params.id;
+            axios.get(`http://localhost:8080/api/employeePortfolio/${itemId}`)
+                .then(response => {
+                    this.newSkill = response.data.portfolioEmployee;
+                    console.log("fetchSkillsItem", response.data.portfolioEmployee)
+                })
+                .catch(error => {
+                    console.error('Error fetching skills item:', error);
+                });
+        },
+        fetchPortfolios() {
+            axios.get('http://localhost:8080/api/portfolio')
+                .then(response => {
+                    this.portfolios = response.data.portfolios;
+                    // console.log(response.data.portfolios)
+                })
+                .catch(error => {
+                    console.error('Error fetching location:', error);
+                });
+        },
+        fetchEmployees() {
+            axios.get('http://localhost:8080/api/employees')
+                .then(response => {
+                    this.employees = response.data.employees;
+                    // console.log(response.data.employees)
+                })
+                .catch(error => {
+                    console.error('Error fetching location:', error);
+                });
+        },
+    },
+};
+</script>
+    
+<style></style>
+    

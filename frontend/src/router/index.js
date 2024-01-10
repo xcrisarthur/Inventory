@@ -51,6 +51,22 @@ import Portfolio from '@/views/Portfolio.vue';
 
 import store from '@/store/index';
 
+import Skills from '@/views/Skills.vue';
+import SkillsADD from '@/views/SkillsADD.vue';
+import SkillsEDIT from '@/views/SkillsEDIT.vue';
+
+import Portofolio from '@/views/Portofolio.vue';
+import PortofolioADD from '@/views/PortofolioADD.vue';
+import PortofolioEDIT from '@/views/PortofolioEDIT.vue';
+
+import SkillsEmployee from '@/views/SkillsEmployee.vue';
+import SkillsEmployeeADD from '@/views/SkillsEmployeeADD.vue';
+import SkillsEmployeeEDIT from '@/views/SkillsEmployeeEDIT.vue';
+
+import PortofolioEmployee from '@/views/PortofolioEmployee.vue';
+import PortofolioEmployeeADD from '@/views/PortofolioEmployeeADD.vue';
+import PortofolioEmployeeEDIT from '@/views/PortofolioEmployeeEDIT.vue';
+
 const defaultRoute = '/sign-in';
 
 const routes = [
@@ -287,6 +303,78 @@ const routes = [
     path: '/portfolio',
     name: 'Portfolio',
     component: Portfolio,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/Skills',
+    name: 'Skills',
+    component: Skills,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/SkillsADD',
+    name: 'SkillsADD',
+    component: SkillsADD,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/Skills/:id',
+    name: 'SkillsEDIT',
+    component: SkillsEDIT,
+    meta: { requiresAuth: true },
+  },
+    {
+    path: '/Portofolio',
+    name: 'Portofolio',
+    component: Portofolio,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/PortofolioADD',
+    name: 'PortofolioADD',
+    component: PortofolioADD,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/Portofolio/:id',
+    name: 'PortofolioEDIT',
+    component: PortofolioEDIT,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/PortofolioEmployee',
+    name: 'PortofolioEmployee',
+    component: PortofolioEmployee,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/PortofolioEmployeeADD',
+    name: 'PortofolioEmployeeADD',
+    component: PortofolioEmployeeADD,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/PortofolioEmployee/:id',
+    name: 'PortofolioEmployeeEDIT',
+    component: PortofolioEmployeeEDIT,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/SkillsEmployee',
+    name: 'SkillsEmployee',
+    component: SkillsEmployee,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/SkillsEmployeeADD',
+    name: 'SkillsEmployeeADD',
+    component: SkillsEmployeeADD,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/SkillsEmployee/:id',
+    name: 'SkillsEmployeeEDIT',
+    component: SkillsEmployeeEDIT,
     meta: { requiresAuth: true },
   },
 ];

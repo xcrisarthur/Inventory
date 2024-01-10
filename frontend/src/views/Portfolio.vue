@@ -20,25 +20,31 @@
 
     <!-- Employee CV Section -->
     <div ref="employeeCvSection" v-if="selectedEmployee">
-      <h2>{{ selectedEmployee.nama }}'s CV</h2>
-      <p>Nomor Induk: {{ selectedEmployee.nomor_induk }}</p>
-      <img :src="selectedEmployee.gambar" style="width: 100%; height: auto; max-width: 300px; max-height: 300px" alt="" />
-
-      <!-- Display Skills based on Employee Nomor Induk -->
-      <h3>Skills</h3>
-      <ul>
-        <li v-for="skill in getSkillsByEmployee(selectedEmployee.nomor_induk)" :key="skill.id_skill">{{ skill.nama }} - Level: {{ skill.level }} - Notes: {{ skill.notes }}</li>
-      </ul>
-
-      <!-- Display Portfolios based on Employee Nomor Induk -->
-      <h3>Portfolios</h3>
-      <ul>
-        <li v-for="portfolio in getPortfoliosByEmployee(selectedEmployee.nomor_induk)" :key="portfolio.id_portfolio">{{ portfolio.nama }} - {{ portfolio.tanggal }} - Role: {{ portfolio.role }} - Technology: {{ portfolio.technology }}</li>
-      </ul>
-
-      <div class="d-flex flex-row mb-3">
-        <div class="p-2 me-5">
-          <button type="button" class="btn btn-primary" @click="createCV" :disabled="!selectedEmployee">Create CV</button>
+      <div class="container">
+        <div class="row">
+          <div class="col-6 text-center">
+            <h2>{{ selectedEmployee.nama }}'s CV</h2>
+            <p>Nomor Induk: {{ selectedEmployee.nomor_induk }}</p>
+            <img :src="selectedEmployee.gambar" style="width: 100%; height: auto; max-width: 300px; max-height: 300px"
+              alt="" />
+          </div>
+          <div class="col-6">
+            <h3>Skills</h3>
+            <ul>
+              <li v-for="skill in getSkillsByEmployee(selectedEmployee.nomor_induk)" :key="skill.id_skill">{{ skill.nama
+              }} - Level: {{ skill.level }} - Notes: {{ skill.notes }}</li>
+            </ul>
+            <h3>Portfolios</h3>
+            <ul>
+              <li v-for="portfolio in getPortfoliosByEmployee(selectedEmployee.nomor_induk)"
+                :key="portfolio.id_portfolio">{{ portfolio.nama }} - {{ portfolio.tanggal }} - Role: {{ portfolio.role }}
+                - Technology: {{ portfolio.technology }}</li>
+            </ul>
+          </div>
+          <div class="col-12 text-center">
+            <button type="button" class="btn btn-primary me-auto" @click="createCV" :disabled="!selectedEmployee">Create
+              CV</button>
+          </div>
         </div>
       </div>
     </div>
