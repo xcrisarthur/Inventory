@@ -9,7 +9,7 @@
 
     <!-- Button to select an employee for generating CV -->
     <div class="mb-3 d-flex">
-      <h3 for="employeeSelect">Select Employee : </h3>
+      <h3 for="employeeSelect">Select Employee :</h3>
       <select id="employeeSelect" v-model="selectedEmployee" @change="selectEmployee" class="form-select w-25 mx-3">
         <option value="">Select an employee</option>
         <option v-for="employee in employeeData" :key="employee.nomor_induk" :value="employee">
@@ -22,6 +22,7 @@
     <div ref="employeeCvSection" v-if="selectedEmployee">
       <h2>{{ selectedEmployee.nama }}'s CV</h2>
       <p>Nomor Induk: {{ selectedEmployee.nomor_induk }}</p>
+      <img :src="selectedEmployee.gambar" style="width: 100%; height: auto; max-width: 300px; max-height: 300px" alt="" />
 
       <!-- Display Skills based on Employee Nomor Induk -->
       <h3>Skills</h3>
@@ -49,6 +50,7 @@ import axios from 'axios';
 import jsPDF from 'jspdf';
 import headerImg from '@/assets/img/header.png';
 import footerImg from '@/assets/img/footer.png';
+import JakartaSansTTF from '@/assets/fonts/jakarta.ttf';
 
 export default {
   data() {
@@ -130,6 +132,8 @@ export default {
     createCV() {
       // Create a new jsPDF instance
       const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+      pdf.addFileToVFS('jakarta.ttf', JakartaSansTTF);
+      pdf.addFont('jakarta.ttf', 'JakartaSans', 'normal');
 
       // Set options
       const options = {

@@ -37,8 +37,6 @@
         </sidenav-collapse>
       </li>
 
-      
-
       <li class="nav-item">
         <sidenav-collapse navText="Kategori" :to="{ name: 'Kategori' }">
           <template #icon>
@@ -97,13 +95,15 @@
         </sidenav-collapse>
       </li>
 
-      <!-- <li class="nav-item">
+      <li class="nav-item">
         <sidenav-collapse navText="Portfolio Karyawan" :to="{ name: 'Portfolio' }">
           <template #icon>
-            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="12" viewBox="0 0 384 512"><path d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="12" viewBox="0 0 384 512">
+              <path d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128z" />
+            </svg>
           </template>
         </sidenav-collapse>
-      </li> -->
+      </li>
 
       <li class="nav-item">
         <h4 class="text-center mt-3">History</h4>
@@ -143,8 +143,6 @@
           </template>
         </sidenav-collapse>
       </li> -->
-
-      
     </ul>
   </div>
 </template>
