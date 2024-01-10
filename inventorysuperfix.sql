@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 04, 2024 at 08:02 AM
+-- Generation Time: Jan 09, 2024 at 09:07 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -152,7 +152,7 @@ INSERT INTO `karyawan` (`nomor_induk`, `gambar`, `nama`, `gender`, `email`, `tel
 ('34567890123456789012', 'Pegawai3.jpg', 'Adi Nugroho', 1, 'adi.nugroho@email.com', '0812-5551-2345', 'Analisis', 'Keuangan', 'Jl. Pinus No. 789, Kota C', NULL, NULL),
 ('45678901234567890123', 'Pegawai4.jpg', 'Ratna Wulandari', 0, 'ratna.wulandari@email.com', '0812-3339-8888', 'Supervisor', 'Pemasaran', 'Jl. Cedar No. 567, Kota D', NULL, NULL),
 ('56789012345678901234', 'Pegawai5.jpg', 'Eko Prasetyo', 1, 'eko.prasetyo@email.com', '0812-7775-5544', 'Pengembang', 'R&D', 'Jl. Birch No. 890, Kota E', NULL, NULL),
-('67890123456789012345', 'Pegawai6.jpg', 'Sri Rahayu', 0, 'sri.rahayu@email.com', '0812-1112-2233', 'Koordinator', 'Operasional', 'Jl. Nanas No. 234, Kota F', NULL, NULL),
+('67890123456789012345', 'https://cdn.discordapp.com/attachments/973824336655958018/1192556050595983390/IMG-20230404-WA0018.png?ex=65a9815f&is=65970c5f&hm=3fa36602ba72e4740063b108f4703bf62a5590fcf5f5fc2dc64f41865c4ff28a&', 'Sri Rahayu', 0, 'sri.rahayu@email.com', '0812-1112-2233', 'Koordinator', 'Operasional', 'Jl. Nanas No. 234, Kota F', NULL, NULL),
 ('78901234567890123456', 'Pegawai7.jpg', 'Muhammad Iqbal', 1, 'muhammad.iqbal@email.com', '0812-6667-7788', 'Perancang', 'Desain', 'Jl. Jeruk No. 901, Kota G', NULL, NULL),
 ('89012345678901234567', 'Pegawai8.jpg', 'Diana Susanti', 0, 'diana.susanti@email.com', '0812-4443-3222', 'Administrator', 'Admin', 'Jl. Maple No. 345, Kota H', NULL, NULL),
 ('90123456789012345678', 'Pegawai9.jpg', 'Faisal Abdullah', 1, 'faisal.abdullah@email.com', '0812-2221-1100', 'Spesialis', 'Penjualan', 'Jl. Pine No. 678, Kota I', NULL, NULL);
@@ -378,6 +378,7 @@ CREATE TABLE `portfolio_karyawan` (
 
 INSERT INTO `portfolio_karyawan` (`id_portfolio_karyawan`, `id_portfolio`, `nomor_induk`) VALUES
 ('PFK001', 'PF001', '01234567890123456789'),
+('PFK018', 'PF001', '23456789012345678901'),
 ('PFK020', 'PF001', '89012345678901234567'),
 ('PFK002', 'PF002', '12345678901234567890'),
 ('PFK016', 'PF002', '23456789012345678901'),
@@ -434,15 +435,16 @@ CREATE TABLE `users` (
   `email` varchar(100) DEFAULT NULL,
   `password` varchar(100) DEFAULT NULL,
   `status` varchar(100) DEFAULT NULL,
-  `nama` varchar(100) DEFAULT NULL
+  `nama` varchar(100) DEFAULT NULL,
+  `role` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `password`, `status`, `nama`) VALUES
-(6, '2172003@maranatha.ac.id', '$2a$10$V7yPjt3XZ5DIuRBIPGWYUea9Tm838E1821qn3q2dyFnA72Wqc2BIO', 'Aktif', 'Yehezkiel David Setiawan');
+INSERT INTO `users` (`id`, `email`, `password`, `status`, `nama`, `role`) VALUES
+(6, '2172003@maranatha.ac.id', '$2a$10$V7yPjt3XZ5DIuRBIPGWYUea9Tm838E1821qn3q2dyFnA72Wqc2BIO', 'Aktif', 'Yehezkiel David Setiawan', 'admin');
 
 --
 -- Indexes for dumped tables
